@@ -1,0 +1,70 @@
+diff --git a/node_modules/d3-tube-map/dist/d3-tube-map.js b/node_modules/d3-tube-map/dist/d3-tube-map.js
+index 8ad4637..793170b 100644
+--- a/node_modules/d3-tube-map/dist/d3-tube-map.js
++++ b/node_modules/d3-tube-map/dist/d3-tube-map.js
+@@ -48,6 +48,10 @@
+     );
+   }
+ 
++  function areColinear(a, b) {
++    return crossProd2d(a, b) == 0;
++  }
++
+   /**
+    * Apply a function to both components of a 2-dimensional vector.
+    */
+@@ -106,7 +110,7 @@
+           shiftMin: m.shiftNormal,
+           shiftMax: m.shiftNormal,
+         };
+-      } else if (areParallel(line1.vector, vec)) {
++      } else if (areColinear(line1.vector, vec)) {
+         let dotProd = dotProd2d(vec, line1.vector);
+         line1.shiftMin = Math.min(line1.shiftMin, m.shiftNormal * dotProd);
+         line1.shiftMax = Math.max(line1.shiftMax, m.shiftNormal * dotProd);
+@@ -116,7 +120,7 @@
+           shiftMin: m.shiftNormal,
+           shiftMax: m.shiftNormal,
+         };
+-      } else if (areParallel(line2.vector, vec)) {
++      } else if (areColinear(line2.vector, vec)) {
+         let dotProd = dotProd2d(vec, line2.vector);
+         line2.shiftMin = Math.min(line2.shiftMin, m.shiftNormal * dotProd);
+         line2.shiftMax = Math.max(line2.shiftMax, m.shiftNormal * dotProd);
+diff --git a/node_modules/d3-tube-map/src/directions.js b/node_modules/d3-tube-map/src/directions.js
+index 3fb6f23..45573f9 100644
+--- a/node_modules/d3-tube-map/src/directions.js
++++ b/node_modules/d3-tube-map/src/directions.js
+@@ -41,6 +41,14 @@ export function areParallel(a, b) {
+   );
+ }
+ 
++/**
++ * Return whether the given 2D vectors are colinear.
++ * Unlike areParallel, this treats anti-parallel vectors as equivalent.
++ */
++function areColinear(a, b) {
++  return crossProd2d(a, b) == 0;
++}
++
+ /**
+  * Apply a function to both components of a 2-dimensional vector.
+  */
+@@ -99,7 +107,7 @@ export function interchangeShift(markers) {
+         shiftMin: m.shiftNormal,
+         shiftMax: m.shiftNormal,
+       };
+-    } else if (areParallel(line1.vector, vec)) {
++    } else if (areColinear(line1.vector, vec)) {
+       let dotProd = dotProd2d(vec, line1.vector);
+       line1.shiftMin = Math.min(line1.shiftMin, m.shiftNormal * dotProd);
+       line1.shiftMax = Math.max(line1.shiftMax, m.shiftNormal * dotProd);
+@@ -109,7 +117,7 @@ export function interchangeShift(markers) {
+         shiftMin: m.shiftNormal,
+         shiftMax: m.shiftNormal,
+       };
+-    } else if (areParallel(line2.vector, vec)) {
++    } else if (areColinear(line2.vector, vec)) {
+       let dotProd = dotProd2d(vec, line2.vector);
+       line2.shiftMin = Math.min(line2.shiftMin, m.shiftNormal * dotProd);
+       line2.shiftMax = Math.max(line2.shiftMax, m.shiftNormal * dotProd);
