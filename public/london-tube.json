@@ -1101,68 +1101,74 @@
           "labelPos": "E"
         },
         {
-          "coords": [13, 39]
+          "coords": [15, 41]
         },
         {
-          "coords": [15, 40]
+          "coords": [17, 42]
         },
         {
-          "coords": [18, 40],
+          "coords": [18, 42],
           "name": "KingsCrossStPancras",
           "marker": "interchange",
-          "labelPos": "N",
+          "labelPos": "S",
           "canonical": true
         },
         {
-          "coords": [25, 40]
+          "coords": [40, 42]
         },
         {
-          "coords": [26, 41]
+          "coords": [42, 43]
         },
         {
-          "coords": [26, 50],
+          "coords": [49, 50]
+        },
+        {
+          "coords": [50, 52]
+        },
+        {
+          "coords": [50, 62],
           "name": "HighburyIslington",
           "marker": "interchange",
           "labelPos": "NW"
         },
         {
-          "coords": [26, 53]
+          "coords": [50, 69]
         },
         {
-          "coords": [27, 55]
+          "coords": [51, 71]
         },
         {
-          "coords": [31, 59],
+          "coords": [55, 75],
           "name": "FinsburyPark",
           "marker": "interchange",
           "labelPos": "SE"
         },
         {
-          "coords": [35, 63]
+          "coords": [59, 79]
         },
         {
-          "coords": [37, 64]
+          "coords": [61, 80]
         },
         {
-          "coords": [41, 64],
+          "coords": [75, 80],
           "name": "SevenSisters",
           "marker": "interchange",
           "labelPos": "N"
         },
         {
-          "coords": [45, 64],
+          "coords": [82, 80],
           "name": "TottenhamHale",
           "marker": "interchange",
           "labelPos": "S"
         },
         {
-          "coords": [49, 64],
+          "coords": [89, 80],
           "name": "BlackhorseRoad",
           "marker": "interchange",
           "labelPos": "N"
         },
         {
-          "coords": [55, 64],
+          "coords": [103, 80],
           "name": "WalthamstowCentral",
           "marker": "interchange",
           "labelPos": "E"
@@ -1653,10 +1659,13 @@
           "coords": [10, -5]
         },
         {
-          "coords": [10, -14],
+          "coords": [10, -12],
           "name": "Waterloo",
           "marker": "interchange",
           "labelPos": "W"
+        },
+        {
+          "coords": [10, -14]
         },
         {
           "coords": [11, -15]
@@ -1715,7 +1724,7 @@
         {
           "coords": [104, -8],
           "name": "CanaryWharf",
-          "labelPos": "N"
+          "labelPos": "NE"
         },
         {
           "coords": [105, -9]
