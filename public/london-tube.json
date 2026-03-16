@@ -430,7 +430,7 @@
     },
     "BrentCross": {
       "name": "BrentCross",
-      "label": "Brent\nCross"
+      "label": "Brent Cross"
     },
     "WillesdenGreen": {
       "name": "WillesdenGreen",
@@ -528,9 +528,19 @@
       "name": "WarrenStreet",
       "label": "Warren\nStreet"
     },
-    "KingsCrossStPancras": {
-      "name": "KingsCrossStPancras",
+    "KingsCrossStPancras_Vic": {
+      "name": "KingsCrossStPancras_Vic",
+      "label": "King's Cross\nSt. Pancras",
+      "hide": true
+    },
+    "KingsCrossStPancras_CirMet": {
+      "name": "KingsCrossStPancras_CirMet",
       "label": "King's Cross\nSt. Pancras"
+    },
+    "KingsCrossStPancras_Nor": {
+      "name": "KingsCrossStPancras_Nor",
+      "label": "King's Cross\nSt. Pancras",
+      "hide": true
     },
     "HighburyIslington": {
       "name": "HighburyIslington",
@@ -638,11 +648,11 @@
     },
     "ElephantCastle": {
       "name": "ElephantCastle",
-      "label": "Elephant &\nCastle"
+      "label": "Elephant & Castle"
     },
     "Camden": {
       "name": "Camden",
-      "label": "Camden\nTown"
+      "label": "Camden Town"
     },
     "ChalkFarm": {
       "name": "ChalkFarm",
@@ -652,13 +662,17 @@
       "name": "Hampstead",
       "label": "Hampstead"
     },
+    "BelsizePark": {
+      "name": "BelsizePark",
+      "label": "Belsize Park"
+    },
     "GoldersGreen": {
       "name": "GoldersGreen",
-      "label": "Golders\nGreen"
+      "label": "Golders Green"
     },
     "HendonCentral": {
       "name": "HendonCentral",
-      "label": "Hendon\nCentral"
+      "label": "Hendon Central"
     },
     "Colindale": {
       "name": "Colindale",
@@ -678,7 +692,7 @@
     },
     "TufnellPark": {
       "name": "TufnellPark",
-      "label": "Tufnell\nPark"
+      "label": "Tufnell Park"
     },
     "Archway": {
       "name": "Archway",
@@ -690,23 +704,27 @@
     },
     "EastFinchley": {
       "name": "EastFinchley",
-      "label": "East\nFinchley"
+      "label": "East Finchley"
     },
     "FinchleyCentral": {
       "name": "FinchleyCentral",
-      "label": "Finchley\nCentral"
+      "label": "Finchley Central"
+    },
+    "MillHillEast": {
+      "name": "MillHillEast",
+      "label": "Mill Hill East"
     },
     "WestFinchley": {
       "name": "WestFinchley",
-      "label": "West\nFinchley"
+      "label": "West Finchley"
     },
     "WoodsidePark": {
       "name": "WoodsidePark",
-      "label": "Woodside\nPark"
+      "label": "Woodside Park"
     },
     "Totteridge": {
       "name": "Totteridge",
-      "label": "Totteridge &\nWhetstone"
+      "label": "Totteridge & Whetstone"
     },
     "HighBarnet": {
       "name": "HighBarnet",
@@ -720,8 +738,8 @@
       "name": "Euston",
       "label": "Euston"
     },
-    "AngelN": {
-      "name": "AngelN",
+    "Angel": {
+      "name": "Angel",
       "label": "Angel"
     },
     "OldStreet": {
@@ -736,9 +754,22 @@
       "name": "Borough",
       "label": "Borough"
     },
-    "Kennington": {
-      "name": "Kennington",
+    "KenningtonCharingCross": {
+      "name": "KenningtonCharingCross",
       "label": "Kennington"
+    },
+    "KenningtonBank": {
+      "name": "KenningtonBank",
+      "label": "Kennington",
+      "hide": true
+    },
+    "NineElms": {
+      "name": "NineElms",
+      "label": "Nine\nElms"
+    },
+    "BatterseaPowerStation": {
+      "name": "BatterseaPowerStation",
+      "label": "Battersea\nPower\nStation"
     },
     "Oval": {
       "name": "Oval",
@@ -1107,10 +1138,10 @@
           "coords": [17, 42]
         },
         {
-          "coords": [18, 42],
-          "name": "KingsCrossStPancras",
+          "coords": [25, 42],
+          "name": "KingsCrossStPancras_Vic",
           "marker": "interchange",
-          "labelPos": "S",
+          "labelPos": "NE",
           "canonical": true
         },
         {
@@ -1312,36 +1343,36 @@
           "coords": [40, 16]
         },
         {
-          "coords": [45, 16],
+          "coords": [48, 16],
           "name": "Monument",
           "marker": "interchange",
-          "labelPos": "S"
+          "labelPos": "SE"
         },
         {
-          "coords": [53, 16],
+          "coords": [62, 16],
           "name": "TowerHill",
           "marker": "interchange",
           "labelPos": "S"
         },
         {
-          "coords": [55, 16]
+          "coords": [64, 16]
         },
         {
-          "coords": [56, 17]
+          "coords": [65, 17]
         },
         {
-          "coords": [56, 20],
+          "coords": [65, 20],
           "name": "Aldgate",
           "labelPos": "W"
         },
         {
-          "coords": [56, 26]
+          "coords": [65, 26]
         },
         {
-          "coords": [55, 27]
+          "coords": [64, 27]
         },
         {
-          "coords": [50, 27],
+          "coords": [54, 27],
           "name": "LiverpoolStreet",
           "marker": "interchange",
           "canonical": true,
@@ -1376,9 +1407,10 @@
           "coords": [28, 40]
         },
         {
-          "coords": [18, 40],
-          "name": "KingsCrossStPancras",
-          "labelPos": "N"
+          "coords": [25, 40],
+          "name": "KingsCrossStPancras_CirMet",
+          "marker": "interchange",
+          "labelPos": "S"
         },
         {
           "coords": [7, 40]
@@ -1464,14 +1496,14 @@
           "coords": [40, 16]
         },
         {
-          "coords": [45, 16],
+          "coords": [48, 16],
           "name": "Monument",
           "marker": "interchange",
           "canonical": true,
-          "labelPos": "S"
+          "labelPos": "SE"
         },
         {
-          "coords": [53, 16],
+          "coords": [62, 16],
           "name": "TowerHill",
           "marker": "interchange",
           "canonical": true,
@@ -1487,19 +1519,19 @@
       "shiftNormal": -1,
       "nodes": [
         {
-          "coords": [56, 20],
+          "coords": [65, 20],
           "name": "Aldgate",
           "canonical": true,
           "labelPos": "W"
         },
         {
-          "coords": [56, 26]
+          "coords": [65, 26]
         },
         {
-          "coords": [55, 27]
+          "coords": [64, 27]
         },
         {
-          "coords": [50, 27],
+          "coords": [54, 27],
           "name": "LiverpoolStreet",
           "marker": "interchange",
           "labelPos": "N"
@@ -1534,8 +1566,9 @@
           "coords": [28, 40]
         },
         {
-          "coords": [18, 40],
-          "name": "KingsCrossStPancras",
+          "coords": [25, 40],
+          "name": "KingsCrossStPancras_CirMet",
+          "marker": "interchange",
           "labelPos": "N"
         }
       ]
@@ -1786,6 +1819,129 @@
           "marker": "interchange",
           "labelPos": "NW"
         }
+      ]
+    },
+    {
+      "name": "Northern",
+      "label": "Northern",
+      "color": "#000000",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        { "coords": [26, 118], "name": "HighBarnet", "labelPos": "W" },
+        { "coords": [26, 114], "name": "Totteridge", "labelPos": "W" },
+        { "coords": [26, 110], "name": "WoodsidePark", "labelPos": "W" },
+        { "coords": [26, 106], "name": "WestFinchley", "labelPos": "W" },
+        { "coords": [26, 96], "name": "FinchleyCentral", "marker": "interchange", "labelPos": "W" },
+        { "coords": [26, 92], "name": "EastFinchley", "labelPos": "W" },
+        { "coords": [26, 88], "name": "Highgate", "labelPos": "W" },
+        { "coords": [26, 84], "name": "Archway", "labelPos": "W" },
+        { "coords": [26, 78], "name": "TufnellPark", "labelPos": "E" },
+        { "coords": [26, 72], "name": "KentishTown", "labelPos": "E" },
+        { "coords": [25, 70]},
+        { "coords": [15, 60]},
+        { "coords": [14, 58]},
+        { "coords": [14, 56], "name": "Camden", "marker": "interchange", "labelPos": "W" }
+      ]
+    },
+    {
+      "name": "Northern",
+      "label": "Northern",
+      "color": "#000000",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        { "coords": [26, 96], "name": "FinchleyCentral", "marker": "interchange", "labelPos": "W" },
+        {"coords": [26, 97]},
+        {"coords": [25, 99]},
+        { "coords": [23, 101], "name": "MillHillEast", "labelPos": "W" }
+      ]
+    },
+    {
+      "name": "Northern",
+      "label": "Northern",
+      "color": "#000000",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        { "coords": [-37, 110], "name": "Edgware", "labelPos": "W" },
+        { "coords": [-32, 105], "name": "BurntOak", "labelPos": "W" },
+        { "coords": [-27, 100], "name": "Colindale", "labelPos": "W" },
+        { "coords": [-20, 93], "name": "HendonCentral", "labelPos": "E" },
+        { "coords": [-16, 89], "name": "BrentCross", "labelPos": "E" },
+        { "coords": [-12, 85], "name": "GoldersGreen", "labelPos": "E" },
+        { "coords": [-8, 81], "name": "Hampstead", "labelPos": "E" },
+        { "coords": [6, 67], "name": "BelsizePark", "labelPos": "W" },
+        { "coords": [11, 62], "name": "ChalkFarm", "labelPos": "W" },
+        { "coords": [13, 60]},
+        {"coords": [14, 58]},
+        { "coords": [14, 56], "name": "Camden", "marker": "interchange", "labelPos": "W" }
+      ]
+    },
+    {
+      "name": "Northern",
+      "label": "Northern",
+      "color": "#000000",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        { "coords": [14, 56], "name": "Camden", "marker": "interchange", "labelPos": "E" },
+        { "coords": [14, 55]},
+        { "coords": [13, 53]},
+        { "coords": [12, 51]},
+        { "coords": [12, 50], "name": "MorningtonCrescent", "labelPos": "W" },
+        { "coords": [12, 46], "name": "Euston", "marker": "interchange", "labelPos": "W" },
+        { "coords": [12, 42]},
+        { "coords": [11, 40]},
+        { "coords": [10, 38]},
+        { "coords": [10, 35], "name": "WarrenStreet", "marker": "interchange", "labelPos": "E" },
+        { "coords": [10, 30], "name": "GoodgeStreet", "labelPos": "W" },
+        { "coords": [10, 25], "name": "Tottenham", "labelPos": "NE" },
+        { "coords": [10, 12], "name": "LeicesterSquare", "labelPos": "NW" },
+        { "coords": [10, 5], "name": "CharingCross", "marker": "interchange", "labelPos": "NE" },
+        { "coords": [10, 0], "name": "Embankment", "marker": "interchange", "labelPos": "NE" },
+        { "coords": [10, -12], "name": "Waterloo", "marker": "interchange", "labelPos": "W" },
+        { "coords": [10, -32]},
+        { "coords": [9, -34] },
+        { "coords": [7, -36], "name": "KenningtonCharingCross", "marker": "interchange", "labelPos": "W" },
+        { "coords": [6, -37]},
+        { "coords": [4, -38]},
+        { "coords": [-2, -38]},
+        { "coords": [-4, -37]},
+        { "coords": [-8, -33]},
+        { "coords": [-10, -32]},
+        { "coords": [-17, -32], "name": "NineElms", "labelPos": "S" },
+        { "coords": [-25, -32], "name": "BatterseaPowerStation", "labelPos": "S" }
+      ]
+    },
+    {
+      "name": "Northern",
+      "label": "Northern",
+      "color": "#000000",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        { "coords": [14, 56], "name": "Camden", "marker": "interchange", "labelPos": "E" },
+        { "coords": [14, 55]},
+        { "coords": [15, 53] },
+        { "coords": [16, 51]},
+        { "coords": [16, 46], "name": "Euston", "marker": "interchange", "labelPos": "E" },
+        { "coords": [16, 45]},
+        { "coords": [17, 44] },
+        { "coords": [25, 44], "name": "KingsCrossStPancras_Nor", "marker": "interchange", "labelPos": "NE"},
+        { "coords": [28, 44]},
+        {"coords": [30, 43]},
+        {"coords": [34, 39]},
+        {"coords": [36, 38]},
+        { "coords": [38, 38], "name": "Angel", "labelPos": "S" },
+        { "coords": [39, 38] },
+        { "coords": [41, 37] },
+        { "coords": [43, 35], "name": "OldStreet", "labelPos": "E" , "marker": "interchange"},
+        { "coords": [45, 33]},
+        {"coords": [46, 31]},
+        { "coords": [46, 27], "name": "Moorgate", "marker": "interchange", "labelPos": "SW" },
+        { "coords": [46, 20], "name": "Bank", "marker": "interchange", "labelPos": "E" },
+        { "coords": [46, 3], "name": "LondonBridge", "marker": "interchange", "labelPos": "SE" },
+        {"coords": [46, 1]},
+        {"coords": [45, -1]},
+        { "coords": [30, -16], "name": "Borough", "labelPos": "E" },
+        { "coords": [17, -29], "name": "ElephantCastle", "marker": "interchange", "labelPos": "E" },
+        { "coords": [9, -37], "name": "KenningtonBank", "marker": "interchange", "labelPos": "W" }
       ]
     }
   ]
