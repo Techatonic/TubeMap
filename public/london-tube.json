@@ -1968,48 +1968,48 @@
           "coords": [-51, 80],
           "name": "WembleyParkJubilee",
           "marker": "interchange",
-          "labelPos": "E"
+          "labelPos": "NE"
         },
         {
           "coords": [-47, 76],
           "name": "Neasden",
-          "labelPos": "E"
+          "labelPos": "NE"
         },
         {
           "coords": [-43, 72],
           "name": "Dollis",
-          "labelPos": "E"
+          "labelPos": "NE"
         },
         {
           "coords": [-39, 68],
           "name": "WillesdenGreen",
-          "labelPos": "E"
+          "labelPos": "NE"
         },
         {
           "coords": [-35, 64],
           "name": "Kilburn",
-          "labelPos": "E"
+          "labelPos": "NE"
         },
         {
           "coords": [-27, 56],
           "name": "WestHampstead",
-          "labelPos": "E"
+          "labelPos": "NE"
         },
         {
           "coords": [-23, 52],
           "name": "FinchleyRoadJubilee",
           "marker": "interchange",
-          "labelPos": "E"
+          "labelPos": "NE"
         },
         {
           "coords": [-19, 48],
           "name": "SwissCottage",
-          "labelPos": "E"
+          "labelPos": "NE"
         },
         {
           "coords": [-15, 44],
           "name": "StJohnsWood",
-          "labelPos": "E"
+          "labelPos": "NE"
         },
         {
           "coords": [-14, 43]
@@ -2224,14 +2224,14 @@
       "shiftCoords": [0, 0],
       "nodes": [
         { "coords": [-37, 110], "name": "Edgware", "labelPos": "W" },
-        { "coords": [-32, 105], "name": "BurntOak", "labelPos": "W" },
-        { "coords": [-27, 100], "name": "Colindale", "labelPos": "W" },
-        { "coords": [-20, 93], "name": "HendonCentral", "labelPos": "E" },
-        { "coords": [-16, 89], "name": "BrentCross", "labelPos": "E" },
-        { "coords": [-12, 85], "name": "GoldersGreen", "labelPos": "E" },
-        { "coords": [-8, 81], "name": "Hampstead", "labelPos": "E" },
-        { "coords": [6, 67], "name": "BelsizePark", "labelPos": "W" },
-        { "coords": [11, 62], "name": "ChalkFarm", "labelPos": "W" },
+        { "coords": [-32, 105], "name": "BurntOak", "labelPos": "SW" },
+        { "coords": [-27, 100], "name": "Colindale", "labelPos": "SW" },
+        { "coords": [-20, 93], "name": "HendonCentral", "labelPos": "NE" },
+        { "coords": [-16, 89], "name": "BrentCross", "labelPos": "NE" },
+        { "coords": [-12, 85], "name": "GoldersGreen", "labelPos": "NE" },
+        { "coords": [-8, 81], "name": "Hampstead", "labelPos": "NE" },
+        { "coords": [6, 67], "name": "BelsizePark", "labelPos": "SW" },
+        { "coords": [11, 62], "name": "ChalkFarm", "labelPos": "SW" },
         { "coords": [13, 60]},
         {"coords": [14, 58]},
         { "coords": [14, 56], "name": "Camden", "marker": "interchange", "labelPos": "W" }
