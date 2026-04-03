@@ -1973,6 +1973,22 @@
         { "coords": [-32, -78], "name": "SouthWimbledon", "labelPos": "E", "marker": "interchange"},
         { "coords": [-41, -87], "name": "Morden", "labelPos": "S"}
       ]
+    },
+    {
+      "name": "WaterlooCity",
+      "label": "Waterloo & City",
+      "color": "#93CEBA",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        { "coords": [10, -12], "name": "Waterloo", "labelPos": "W"},
+        { "coords": [24, -12]},
+        { "coords": [26, -11]},
+        { "coords": [42, 5]},
+        { "coords": [43, 7]},
+        { "coords": [43, 16]},
+        { "coords": [44, 18]},
+        { "coords": [46, 20], "name": "Bank", "labelPos": "NE", "marker": "interchange"}
+      ]
     }
   ]
 }
