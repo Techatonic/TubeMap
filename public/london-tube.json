@@ -112,8 +112,11 @@
     },
     "PaddingtonBakerloo": {
       "name": "PaddingtonBakerloo",
-      "label": "Paddington",
-      "hide": true
+      "label": "Paddington"
+    },
+    "PaddingtonCircle2": {
+      "name": "PaddingtonCircle2",
+      "label": "Paddington"
     },
     "EarlsCourt": {
       "name": "EarlsCourt",
@@ -409,6 +412,10 @@
     },
     "Hammersmith": {
       "name": "Hammersmith",
+      "label": "Hammersmith"
+    },
+    "HammersmithCircle": {
+      "name": "HammersmithCircle",
       "label": "Hammersmith"
     },
     "Stanmore": {
@@ -855,28 +862,28 @@
       "name": "Tottenham",
       "label": "Tottenham\nCourt Rd"
     },
-    "Goldhawk": {
-      "name": "Goldhawk",
-      "label": "Goldhawk\nRoad"
+    "GoldhawkRoad": {
+      "name": "GoldhawkRoad",
+      "label": "Goldhawk Road"
     },
-    "SheperdsBushMrkt": {
-      "name": "SheperdsBushMrkt",
+    "ShepherdsBushMarket": {
+      "name": "ShepherdsBushMarket",
       "label": "Shepherd's\nBush Market"
     },
-    "WoodLaneHC": {
-      "name": "WoodLaneHC",
+    "WoodLane": {
+      "name": "WoodLane",
       "label": "Wood Lane"
     },
     "LatimerRoad": {
       "name": "LatimerRoad",
-      "label": "Latimer\nRoad"
+      "label": "Latimer Road"
     },
     "LadbrokeGrove": {
       "name": "LadbrokeGrove",
-      "label": "Ladbroke\nGrove"
+      "label": "Ladbroke Grove"
     },
-    "WestbourneP": {
-      "name": "WestbourneP",
+    "WestbournePark": {
+      "name": "WestbournePark",
       "label": "Westbourne\nPark"
     },
     "RoyalOak": {
@@ -922,10 +929,6 @@
     "EastActon": {
       "name": "EastActon",
       "label": "East Acton"
-    },
-    "WoodLaneCen": {
-      "name": "WoodLaneCen",
-      "label": "Wood Lane"
     },
     "ShepBushCen": {
       "name": "ShepBushCen",
@@ -1475,6 +1478,74 @@
         },
         {
           "coords": [7, 40]
+        }
+      ]
+    },
+    {
+      "name": "Circle",
+      "label": "Circle",
+      "color": "#FFD600",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        {
+          "coords": [-34, 40],
+          "name": "EdgwareRoadCir",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-44, 40],
+          "name": "PaddingtonCircle2",
+          "labelPos": "N",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-46, 39]
+        },
+        {
+          "coords": [-52, 33],
+          "name": "RoyalOak",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [-56, 29],
+          "name": "WestbournePark",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-60, 25],
+          "name": "LadbrokeGrove",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-63, 22],
+          "name": "LatimerRoad",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-65, 20]
+        },
+        {
+          "coords": [-66, 18]
+        },
+        {
+          "coords": [-66, 12],
+          "name": "WoodLane",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-66, 9],
+          "name": "ShepherdsBushMarket",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-66, 6],
+          "name": "GoldhawkRoad",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-66, 3],
+          "name": "HammersmithCircle",
+          "labelPos": "W"
         }
       ]
     },
@@ -2304,7 +2375,7 @@
         { "coords": [-20, 43]},
         { "coords": [-27, 43], "name": "Marylebone", "marker": "interchange", "labelPos": "N"},
         { "coords": [-41, 43], "name": "EdgwareRoadBakerloo", "labelPos": "N"},
-        { "coords": [-48, 43], "name": "PaddingtonBakerloo", "marker": "interchange", "labelPos": "N"},
+        { "coords": [-48, 43], "name": "PaddingtonBakerloo", "marker": "interchange", "labelPos": "NW"},
         { "coords": [-55, 43], "name": "WarwickAvenue", "labelPos": "S"},
         { "coords": [-57, 43]},
         { "coords": [-59, 44]},
