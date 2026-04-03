@@ -299,10 +299,6 @@
       "name": "SouthHarrow",
       "label": "South\nHarrow"
     },
-    "Rayners": {
-      "name": "Rayners",
-      "label": "Rayners\nLane"
-    },
     "HydeParkCorner": {
       "name": "HydeParkCorner",
       "label": "Hyde Park\nCorner"
@@ -431,9 +427,14 @@
       "name": "Kingsbury",
       "label": "Kingsbury"
     },
-    "WembleyPark": {
-      "name": "WembleyPark",
+    "WembleyParkJubilee": {
+      "name": "WembleyParkJubilee",
       "label": "Wembley Park"
+    },
+    "WembleyParkMetropolitan": {
+      "name": "WembleyParkMetropolitan",
+      "label": "Wembley Park",
+      "hide": true
     },
     "Neasden": {
       "name": "Neasden",
@@ -459,8 +460,13 @@
       "name": "WestHampstead",
       "label": "West Hampstead"
     },
-    "FinchleyRoad": {
-      "name": "FinchleyRoad",
+    "FinchleyRoadMetropolitan": {
+      "name": "FinchleyRoadMetropolitan",
+      "label": "Finchley Road",
+      "hide": true
+    },
+    "FinchleyRoadJubilee": {
+      "name": "FinchleyRoadJubilee",
       "label": "Finchley Road"
     },
     "SwissCottage": {
@@ -473,7 +479,8 @@
     },
     "BakerStreetJub": {
       "name": "BakerStreetJub",
-      "label": ""
+      "label": "",
+      "hide": true
     },
     "BondStreet": {
       "name": "BondStreet",
@@ -878,7 +885,7 @@
     },
     "WestRuislip": {
       "name": "WestRuislip",
-      "label": "West\nRuislip"
+      "label": "West Ruislip"
     },
     "Ruislip": {
       "name": "Ruislip",
@@ -886,14 +893,14 @@
     },
     "RuislipManor": {
       "name": "RuislipManor",
-      "label": "Ruislip\nManor"
+      "label": "Ruislip Manor"
     },
     "Eastcote": {
       "name": "Eastcote",
       "label": "Eastcote"
     },
-    "PiccadillyRayn": {
-      "name": "PiccadillyRayn",
+    "RaynersLanePiccadilly": {
+      "name": "RaynersLanePiccadilly",
       "label": "Rayners Lane"
     },
     "Greenford": {
@@ -906,7 +913,7 @@
     },
     "HangerLane": {
       "name": "HangerLane",
-      "label": "Hanger\nLane"
+      "label": "Hanger Lane"
     },
     "NorthActon": {
       "name": "NorthActon",
@@ -1034,7 +1041,16 @@
     },
     "HarrowOnTheHill": {
       "name": "HarrowOnTheHill",
-      "label": "Harrow-on-\nthe-Hill"
+      "label": "Harrow-\non-the-Hill"
+    },
+    "WestHarrow": {
+      "name": "WestHarrow",
+      "label": "West\nHarrow"
+    },
+    "RaynersLaneMetropolitan": {
+      "name": "RaynersLaneMetropolitan",
+      "label": "Rayners\nLane",
+      "hide": true
     },
     "NorthHarrow": {
       "name": "NorthHarrow",
@@ -1046,11 +1062,19 @@
     },
     "NorthwoodHills": {
       "name": "NorthwoodHills",
-      "label": "Northwood\nHills"
+      "label": "Northwood Hills"
     },
     "Northwood": {
       "name": "Northwood",
       "label": "Northwood"
+    },
+    "MoorPark": {
+      "name": "MoorPark",
+      "label": "Moor Park"
+    },
+    "PrestonRoad": {
+      "name": "PrestonRoad",
+      "label": "Preston Road"
     },
     "NorthwickPark": {
       "name": "NorthwickPark",
@@ -1060,6 +1084,10 @@
       "name": "Croxley",
       "label": "Croxley"
     },
+    "Watford": {
+      "name": "Watford",
+      "label": "Watford"
+    },
     "Rickmansworth": {
       "name": "Rickmansworth",
       "label": "Rickmansworth"
@@ -1068,8 +1096,8 @@
       "name": "Chorleywood",
       "label": "Chorleywood"
     },
-    "Chalfont": {
-      "name": "Chalfont",
+    "ChalfontAndLatimer": {
+      "name": "ChalfontAndLatimer",
       "label": "Chalfont &\nLatimer"
     },
     "Chesham": {
@@ -1257,6 +1285,7 @@
         {
           "coords": [-12, 40],
           "name": "BakerStreet",
+          "marker": "interchange",
           "labelPos": "NE"
         },
         {
@@ -1602,6 +1631,236 @@
           "name": "KingsCrossStPancras_CirMet",
           "marker": "interchange",
           "labelPos": "N"
+        },
+        {
+          "coords": [7, 40],
+          "name": "EustonSquare",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-2, 40],
+          "name": "GreatPortlandStreet",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-12, 40],
+          "name": "BakerStreet",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [-14, 41]
+        },
+        {
+          "coords": [-24, 51],
+          "name": "FinchleyRoadMetropolitan",
+          "marker": "interchange",
+          "labelPos": "E"
+        },
+        {
+          "coords": [-52, 79],
+          "name": "WembleyParkMetropolitan",
+          "marker": "interchange",
+          "labelPos": "E"
+        },
+        {
+          "coords": [-54, 80]
+        },
+        {
+          "coords": [-60, 80],
+          "name": "PrestonRoad",
+          "labelPos": "N"
+        },
+        {
+          "coords": [-73, 80],
+          "name": "NorthwickPark",
+          "labelPos": "N"
+        },
+        {
+          "coords": [-84, 80],
+          "name": "HarrowOnTheHill",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-94, 80],
+          "name": "WestHarrow",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-103, 80]
+        },
+        {
+          "coords": [-105, 81]
+        },
+        {
+          "coords": [-111, 87],
+          "name": "RaynersLaneMetropolitan",
+          "marker": "interchange",
+          "labelPos": "SW"
+        },
+        {
+          "coords": [-114, 90],
+          "name": "Eastcote",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [-116, 92]
+        },
+        {
+          "coords": [-117, 93]
+        },
+        {
+          "coords": [-119, 94],
+          "name": "RuislipManor",
+          "labelPos": "N"
+        },
+        {
+          "coords": [-123, 94],
+          "name": "Ruislip",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-134, 94],
+          "name": "Ickenham",
+          "marker": "interchange",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-144, 94],
+          "name": "Hillingdon",
+          "marker": "interchange",
+          "labelPos": "N"
+        },
+        {
+          "coords": [-154, 94],
+          "name": "Uxbridge",
+          "marker": "interchange",
+          "labelPos": "S"
+        }
+      ]
+    },
+    {
+      "name": "Metropolitan",
+      "label": "Metropolitan",
+      "color": "#89014C",
+      "shiftCoords": [0, 0],
+      "shiftNormal": -1,
+      "nodes": [
+        {
+          "coords": [-84, 80],
+          "name": "HarrowOnTheHill",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-86, 80]
+        },
+        {
+          "coords": [-88, 81]
+        },
+        {
+          "coords": [-92, 85],
+          "name": "NorthHarrow",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [-96, 89],
+          "name": "Pinner",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [-101, 94],
+          "name": "NorthwoodHills",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [-104, 97],
+          "name": "Northwood",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [-107, 100],
+          "name": "MoorPark",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [-109, 102]
+        },
+        {
+          "coords": [-110, 104]
+        },
+        {
+          "coords": [-110, 108],
+          "name": "Croxley",
+          "labelPos": "E"
+        },
+        {
+          "coords": [-110, 112],
+          "name": "Watford",
+          "labelPos": "E"
+        }
+      ]
+    },
+    {
+      "name": "Metropolitan",
+      "label": "Metropolitan",
+      "color": "#89014C",
+      "shiftCoords": [0, 0],
+      "shiftNormal": -1,
+      "nodes": [
+        {
+          "coords": [-107, 100],
+          "name": "MoorPark",
+          "labelPos": "E"
+        },
+        {
+          "coords": [-113, 106],
+          "name": "Rickmansworth",
+          "labelPos": "SW"
+        },
+        {
+          "coords": [-118, 111],
+          "name": "Chorleywood",
+          "labelPos": "SW"
+        },
+        {
+          "coords": [-120, 113]
+        },
+        {
+          "coords": [-122, 114]
+        },
+        {
+          "coords": [-138, 114],
+          "name": "ChalfontAndLatimer",
+          "labelPos": "N"
+        },
+        {
+          "coords": [-157, 114],
+          "name": "Amersham",
+          "labelPos": "S"
+        }
+      ]
+    },
+    {
+      "name": "Metropolitan",
+      "label": "Metropolitan",
+      "color": "#89014C",
+      "shiftCoords": [0, 0],
+      "shiftNormal": -1,
+      "nodes": [
+        {
+          "coords": [-138, 114],
+          "name": "ChalfontAndLatimer",
+          "labelPos": "N"
+        },
+        {
+          "coords": [-143, 114]
+        },
+        {
+          "coords": [-145, 115]
+        },
+        {
+          "coords": [-150, 120],
+          "name": "Chesham",
+          "labelPos": "W"
         }
       ]
     },
@@ -1636,7 +1895,7 @@
         },
         {
           "coords": [-51, 80],
-          "name": "WembleyPark",
+          "name": "WembleyParkJubilee",
           "marker": "interchange",
           "labelPos": "E"
         },
@@ -1667,7 +1926,7 @@
         },
         {
           "coords": [-23, 52],
-          "name": "FinchleyRoad",
+          "name": "FinchleyRoadJubilee",
           "marker": "interchange",
           "labelPos": "E"
         },
