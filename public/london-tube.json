@@ -777,7 +777,7 @@
     },
     "ClaphamNorth": {
       "name": "ClaphamNorth",
-      "label": "Clapham\nNorth"
+      "label": "Clapham North"
     },
     "ClaphamCommon": {
       "name": "ClaphamCommon",
@@ -785,7 +785,7 @@
     },
     "ClaphamSouth": {
       "name": "ClaphamSouth",
-      "label": "Clapham\nSouth"
+      "label": "Clapham South"
     },
     "Balham": {
       "name": "Balham",
@@ -793,11 +793,11 @@
     },
     "TootingBec": {
       "name": "TootingBec",
-      "label": "Tooting\nBec"
+      "label": "Tooting Bec"
     },
     "TootingBroadway": {
       "name": "TootingBroadway",
-      "label": "Tooting\nBroadway"
+      "label": "Tooting Broadway"
     },
     "ColliersWood": {
       "name": "ColliersWood",
@@ -805,7 +805,7 @@
     },
     "SouthWimbledon": {
       "name": "SouthWimbledon",
-      "label": "South\nWimbledon"
+      "label": "South Wimbledon"
     },
     "Morden": {
       "name": "Morden",
@@ -1072,27 +1072,30 @@
       "shiftCoords": [0, 0],
       "nodes": [
         {
-          "coords": [0, -25],
+          "coords": [7, -55],
           "name": "Brixton",
           "labelPos": "SW"
         },
         {
-          "coords": [-4, -21],
+          "coords": [-1, -47],
           "name": "Stockwell",
           "marker": "interchange",
           "labelPos": "E"
         },
         {
-          "coords": [-8, -17],
+          "coords": [-7, -41],
           "name": "Vauxhall",
           "marker": "interchange",
           "labelPos": "NE"
         },
         {
-          "coords": [-9, -15]
+          "coords": [-8, -40]
         },
         {
-          "coords": [-9, -8],
+          "coords": [-9, -38]
+        },
+        {
+          "coords": [-9, -21],
           "name": "Pimlico",
           "labelPos": "W"
         },
@@ -1686,22 +1689,22 @@
           "labelPos": "SW"
         },
         {
-          "coords": [9, -3]
+          "coords": [8, -2]
         },
         {
-          "coords": [10, -5]
+          "coords": [9, -4]
         },
         {
-          "coords": [10, -12],
+          "coords": [9, -12],
           "name": "Waterloo",
           "marker": "interchange",
           "labelPos": "W"
         },
         {
-          "coords": [10, -14]
+          "coords": [9, -14]
         },
         {
-          "coords": [11, -15]
+          "coords": [10, -15]
         },
         {
           "coords": [18, -15],
@@ -1916,6 +1919,19 @@
       "color": "#000000",
       "shiftCoords": [0, 0],
       "nodes": [
+        { "coords": [7, -36] },
+        { "coords": [5, -38]},
+        { "coords": [4, -40]},
+        { "coords": [4, -41]},
+        { "coords": [3, -43]}
+      ]
+    },
+    {
+      "name": "Northern",
+      "label": "Northern",
+      "color": "#000000",
+      "shiftCoords": [0, 0],
+      "nodes": [
         { "coords": [14, 56], "name": "Camden", "marker": "interchange", "labelPos": "E" },
         { "coords": [14, 55]},
         { "coords": [15, 53] },
@@ -1937,11 +1953,25 @@
         { "coords": [46, 27], "name": "Moorgate", "marker": "interchange", "labelPos": "SW" },
         { "coords": [46, 20], "name": "Bank", "marker": "interchange", "labelPos": "E" },
         { "coords": [46, 3], "name": "LondonBridge", "marker": "interchange", "labelPos": "SE" },
-        {"coords": [46, 1]},
-        {"coords": [45, -1]},
-        { "coords": [30, -16], "name": "Borough", "labelPos": "E" },
-        { "coords": [17, -29], "name": "ElephantCastle", "marker": "interchange", "labelPos": "E" },
-        { "coords": [9, -37], "name": "KenningtonBank", "marker": "interchange", "labelPos": "W" }
+        {"coords": [46, -1]},
+        {"coords": [45, -3]},
+        { "coords": [30, -18], "name": "Borough", "labelPos": "E" },
+        { "coords": [17, -31], "name": "ElephantCastle", "marker": "interchange", "labelPos": "E" },
+        { "coords": [9, -39], "name": "KenningtonBank", "marker": "interchange", "labelPos": "W" },
+        { "coords": [7, -41]},
+        { "coords": [5, -42]},
+        { "coords": [3, -43]},
+        { "coords": [2, -44], "name":  "Oval", "labelPos": "SE"},
+        { "coords": [-1, -47], "name": "Stockwell", "labelPos": "E"},
+        { "coords": [-5, -51], "name": "ClaphamNorth", "labelPos": "W", "marker": "interchange"},
+        { "coords": [-8, -54], "name": "ClaphamCommon", "labelPos": "SE"},
+        { "coords": [-12, -58], "name": "ClaphamSouth", "labelPos": "SE"},
+        { "coords": [-16, -62], "name": "Balham", "labelPos": "SE", "marker": "interchange"},
+        { "coords": [-20, -66], "name": "TootingBec", "labelPos": "SE"},
+        { "coords": [-24, -70], "name": "TootingBroadway", "labelPos": "SE"},
+        { "coords": [-28, -74], "name": "ColliersWood", "labelPos": "NW"},
+        { "coords": [-32, -78], "name": "SouthWimbledon", "labelPos": "E", "marker": "interchange"},
+        { "coords": [-41, -87], "name": "Morden", "labelPos": "S"}
       ]
     }
   ]
