@@ -36,6 +36,11 @@
       "name": "Embankment",
       "label": "Embankment"
     },
+    "EmbankmentBakerloo": {
+      "name": "Embankment",
+      "label": "Embankment",
+      "hide": true
+    },
     "Temple": {
       "name": "Temple",
       "label": "Temple"
@@ -92,6 +97,11 @@
       "name": "BakerStreet",
       "label": "Baker Street"
     },
+    "BakerStreetBakerloo": {
+      "name": "BakerStreet",
+      "label": "Baker Street",
+      "hide": true
+    },
     "EdgwareRoadCir": {
       "name": "EdgwareRoadCir",
       "label": "Edgware Road"
@@ -99,6 +109,11 @@
     "Paddington": {
       "name": "Paddington",
       "label": "Paddington"
+    },
+    "PaddingtonBakerloo": {
+      "name": "PaddingtonBakerloo",
+      "label": "Paddington",
+      "hide": true
     },
     "EarlsCourt": {
       "name": "EarlsCourt",
@@ -296,8 +311,8 @@
       "name": "Knightsbridge",
       "label": "Knightsbridge"
     },
-    "Piccadilly": {
-      "name": "Piccadilly",
+    "PiccadillyCircus": {
+      "name": "PiccadillyCircus",
       "label": "Piccadilly\nCircus"
     },
     "LeicesterSquare": {
@@ -468,9 +483,19 @@
       "name": "GreenPark",
       "label": "Green\nPark"
     },
-    "Waterloo": {
+    "WaterlooNorthern": {
+      "name": "Waterloo",
+      "label": "Waterloo",
+      "hide": true
+    },
+    "WaterlooJubilee": {
       "name": "Waterloo",
       "label": "Waterloo"
+    },
+    "WaterlooBakerloo": {
+      "name": "Waterloo",
+      "label": "Waterloo",
+      "hide": true
     },
     "Southwark": {
       "name": "Southwark",
@@ -566,8 +591,8 @@
       "name": "WalthamstowCentral",
       "label": "Walthamstow\nCentral"
     },
-    "HarrowWealdstone": {
-      "name": "HarrowWealdstone",
+    "HarrowAndWealdstone": {
+      "name": "HarrowAndWealdstone",
       "label": "Harrow &\nWealdstone"
     },
     "Kenton": {
@@ -576,43 +601,43 @@
     },
     "SouthKenton": {
       "name": "SouthKenton",
-      "label": "South\nKenton"
+      "label": "South Kenton"
     },
     "NorthWembley": {
       "name": "NorthWembley",
-      "label": "North\nWembley"
+      "label": "North Wembley"
     },
-    "WembleyC": {
-      "name": "WembleyC",
-      "label": "Wembley\nCentral"
+    "WembleyCentral": {
+      "name": "WembleyCentral",
+      "label": "Wembley Central"
     },
-    "Stonebridge": {
-      "name": "Stonebridge",
-      "label": "Stonebridge\nPark"
+    "StonebridgePark": {
+      "name": "StonebridgePark",
+      "label": "Stonebridge Park"
     },
     "Harlesden": {
       "name": "Harlesden",
       "label": "Harlesden"
     },
-    "WillesdenJn": {
-      "name": "WillesdenJn",
-      "label": "Willesden\nJunction"
+    "WillesdenJunction": {
+      "name": "WillesdenJunction",
+      "label": "Willesden Junction"
     },
     "KensalGreen": {
       "name": "KensalGreen",
-      "label": "Kensal\nGreen"
+      "label": "Kensal Green"
     },
     "QueensPark": {
       "name": "QueensPark",
-      "label": "Queen's\nPark"
+      "label": "Queen's Park"
     },
     "KilburnPark": {
       "name": "KilburnPark",
-      "label": "Kilburn\nPark"
+      "label": "Kilburn Park"
     },
     "MaidaVale": {
       "name": "MaidaVale",
-      "label": "Maida\nVale"
+      "label": "Maida Vale"
     },
     "WarwickAvenue": {
       "name": "WarwickAvenue",
@@ -626,9 +651,13 @@
       "name": "PaddingtonBak",
       "label": "Paddington"
     },
-    "EdgwareRoadBak": {
-      "name": "EdgwareRoadBak",
+    "EdgwareRoadBakerloo": {
+      "name": "EdgwareRoadBakerloo",
       "label": "Edgware Road"
+    },
+    "Marylebone": {
+      "name": "Marylebone",
+      "label": "Marylebone"
     },
     "MarbleArch": {
       "name": "MarbleArch",
@@ -1231,56 +1260,56 @@
           "labelPos": "NE"
         },
         {
-          "coords": [-30, 40],
+          "coords": [-34, 40],
           "name": "EdgwareRoadCir",
           "labelPos": "S"
         },
         {
-          "coords": [-38, 40]
+          "coords": [-41, 40]
         },
         {
-          "coords": [-39, 39]
+          "coords": [-42, 39]
         },
         {
-          "coords": [-39, 35],
+          "coords": [-42, 35],
           "name": "Paddington",
           "labelPos": "E"
         },
         {
-          "coords": [-39, 25],
+          "coords": [-42, 25],
           "name": "Bayswater",
           "labelPos": "E"
         },
         {
-          "coords": [-39, 15],
+          "coords": [-42, 15],
           "name": "NottingHillGate",
           "labelPos": "E",
           "marker": "interchange"
         },
         {
-          "coords": [-39, 10],
+          "coords": [-42, 10],
           "name": "HighStreetKensington",
           "labelPos": "E"
         },
         {
-          "coords": [-39, 2]
+          "coords": [-42, 2]
         },
         {
-          "coords": [-38, 1]
+          "coords": [-41, 1]
         },
         {
-          "coords": [-32, 1],
+          "coords": [-34, 1],
           "name": "GloucesterRoad",
           "labelPos": "N"
         },
         {
-          "coords": [-25, 1],
+          "coords": [-29, 1],
           "name": "SouthKensington",
           "marker": "interchange",
           "labelPos": "S"
         },
         {
-          "coords": [-17, 1],
+          "coords": [-19, 1],
           "name": "SloaneSquare",
           "labelPos": "S"
         },
@@ -1303,7 +1332,7 @@
           "labelPos": "SW"
         },
         {
-          "coords": [11, 1],
+          "coords": [10, 1],
           "name": "Embankment",
           "marker": "interchange",
           "labelPos": "SE"
@@ -1428,14 +1457,14 @@
       "shiftNormal": 1,
       "nodes": [
         {
-          "coords": [-25, 1],
+          "coords": [-29, 1],
           "name": "SouthKensington",
           "marker": "interchange",
           "canonical": true,
           "labelPos": "S"
         },
         {
-          "coords": [-17, 1],
+          "coords": [-19, 1],
           "name": "SloaneSquare",
           "canonical": true,
           "labelPos": "S"
@@ -1459,7 +1488,7 @@
           "labelPos": "SW"
         },
         {
-          "coords": [11, 1],
+          "coords": [10, 1],
           "name": "Embankment",
           "marker": "interchange",
           "canonical": true,
@@ -1583,22 +1612,22 @@
       "shiftCoords": [0, 0],
       "nodes": [
         {
-          "coords": [-52, 97],
+          "coords": [-52, 101],
           "name": "Stanmore",
           "labelPos": "E"
         },
         {
-          "coords": [-52, 93],
+          "coords": [-52, 96],
           "name": "CanonsPark",
           "labelPos": "E"
         },
         {
-          "coords": [-52, 90],
+          "coords": [-52, 92],
           "name": "Queensbury",
           "labelPos": "E"
         },
         {
-          "coords": [-52, 86],
+          "coords": [-52, 87],
           "name": "Kingsbury",
           "labelPos": "E"
         },
@@ -1689,22 +1718,22 @@
           "labelPos": "SW"
         },
         {
-          "coords": [8, -2]
+          "coords": [7, -1]
         },
         {
-          "coords": [9, -4]
+          "coords": [8, -3]
         },
         {
-          "coords": [9, -12],
-          "name": "Waterloo",
+          "coords": [8, -12],
+          "name": "WaterlooJubilee",
           "marker": "interchange",
           "labelPos": "W"
         },
         {
-          "coords": [9, -14]
+          "coords": [8, -14]
         },
         {
-          "coords": [10, -15]
+          "coords": [9, -15]
         },
         {
           "coords": [18, -15],
@@ -1896,10 +1925,10 @@
         { "coords": [10, 35], "name": "WarrenStreet", "marker": "interchange", "labelPos": "E" },
         { "coords": [10, 30], "name": "GoodgeStreet", "labelPos": "W" },
         { "coords": [10, 25], "name": "Tottenham", "labelPos": "NE" },
-        { "coords": [10, 12], "name": "LeicesterSquare", "labelPos": "NW" },
-        { "coords": [10, 5], "name": "CharingCross", "marker": "interchange", "labelPos": "NE" },
-        { "coords": [10, 0], "name": "Embankment", "marker": "interchange", "labelPos": "NE" },
-        { "coords": [10, -12], "name": "Waterloo", "marker": "interchange", "labelPos": "W" },
+        { "coords": [10, 15], "name": "LeicesterSquare", "labelPos": "NW" },
+        { "coords": [10, 6], "name": "CharingCross", "marker": "interchange", "labelPos": "NE" },
+        { "coords": [10, 1], "name": "Embankment", "marker": "interchange", "labelPos": "SE" },
+        { "coords": [10, -12], "name": "WaterlooNorthern", "marker": "interchange", "labelPos": "W" },
         { "coords": [10, -32]},
         { "coords": [9, -34] },
         { "coords": [7, -36], "name": "KenningtonCharingCross", "marker": "interchange", "labelPos": "W" },
@@ -1919,7 +1948,7 @@
       "color": "#000000",
       "shiftCoords": [0, 0],
       "nodes": [
-        { "coords": [7, -36] },
+        { "coords": [7, -36], "name": "KenningtonCharingCross"},
         { "coords": [5, -38]},
         { "coords": [4, -40]},
         { "coords": [4, -41]},
@@ -1956,7 +1985,7 @@
         {"coords": [46, -1]},
         {"coords": [45, -3]},
         { "coords": [30, -18], "name": "Borough", "labelPos": "E" },
-        { "coords": [17, -31], "name": "ElephantCastle", "marker": "interchange", "labelPos": "E" },
+        { "coords": [17, -31], "name": "ElephantCastle", "marker": "interchange", "labelPos": "SE" },
         { "coords": [9, -39], "name": "KenningtonBank", "marker": "interchange", "labelPos": "W" },
         { "coords": [7, -41]},
         { "coords": [5, -42]},
@@ -1980,7 +2009,7 @@
       "color": "#93CEBA",
       "shiftCoords": [0, 0],
       "nodes": [
-        { "coords": [10, -12], "name": "Waterloo", "labelPos": "W"},
+        { "coords": [10, -12], "name": "WaterlooBakerloo", "marker": "interchange", "labelPos": "W"},
         { "coords": [24, -12]},
         { "coords": [26, -11]},
         { "coords": [42, 5]},
@@ -1988,6 +2017,52 @@
         { "coords": [43, 16]},
         { "coords": [44, 18]},
         { "coords": [46, 20], "name": "Bank", "labelPos": "NE", "marker": "interchange"}
+      ]
+    },
+    {
+      "name": "Bakerloo",
+      "label": "Bakerloo",
+      "color": "#A45A2A",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        { "coords": [17, -31], "name": "ElephantCastle", "labelPos": "SE"},
+        { "coords": [13, -27]},
+        { "coords": [12, -25]},
+        { "coords": [12, -12], "name": "WaterlooBakerloo", "marker": "interchange", "labelPos": "W"},
+        { "coords": [12, 1], "name": "EmbankmentBakerloo", "marker": "interchange", "labelPos": "SE"},
+        { "coords": [12, 3]},
+        { "coords": [11, 5]},
+        { "coords": [10, 6], "name": "CharingCross", "marker": "interchange", "labelPos":  "NE"},
+        { "coords": [1, 15], "name": "PiccadillyCircus", "marker": "interchange", "labelPos": "SW"},
+        { "coords": [-3, 19]},
+        { "coords": [-4, 21]},
+        { "coords": [-4, 22], "name": "OxfordCircus"},
+        { "coords": [-4, 27]},
+        { "coords": [-5, 29]},
+        { "coords": [-8, 32], "name": "RegentsPark", "labelPos": "NE"},
+        { "coords": [-14, 38], "name": "BakerStreetBakerloo", "marker": "interchange", "labelPos": "NE"},
+        { "coords": [-18, 42]},
+        { "coords": [-20, 43]},
+        { "coords": [-27, 43], "name": "Marylebone", "marker": "interchange", "labelPos": "N"},
+        { "coords": [-41, 43], "name": "EdgwareRoadBakerloo", "labelPos": "N"},
+        { "coords": [-48, 43], "name": "PaddingtonBakerloo", "marker": "interchange", "labelPos": "N"},
+        { "coords": [-55, 43], "name": "WarwickAvenue", "labelPos": "S"},
+        { "coords": [-57, 43]},
+        { "coords": [-59, 44]},
+        { "coords": [-60, 45], "name": "MaidaVale", "labelPos": "SW"},
+        { "coords": [-63, 48], "name": "KilburnPark", "labelPos": "SW"},
+        { "coords": [-66, 51], "name": "QueensPark", "labelPos": "SW", "marker": "interchange"},
+        { "coords": [-67, 52]},
+        { "coords": [-68, 54]},
+        { "coords": [-68, 56], "name": "KensalGreen", "labelPos": "E"},
+        { "coords": [-68, 60], "name": "WillesdenJunction", "labelPos": "W", "marker": "interchange"},
+        { "coords": [-68, 63], "name": "Harlesden", "labelPos": "W"},
+        { "coords": [-68, 66], "name": "StonebridgePark", "labelPos": "W"},
+        { "coords": [-68, 69], "name": "WembleyCentral", "labelPos": "W"},
+        { "coords": [-68, 72], "name": "NorthWembley", "labelPos": "W"},
+        { "coords": [-68, 75], "name": "SouthKenton", "labelPos": "W"},
+        { "coords": [-68, 85], "name": "Kenton", "labelPos": "W"},
+        { "coords": [-68, 96], "name": "HarrowAndWealdstone", "labelPos": "W"}
       ]
     }
   ]

@@ -35,14 +35,15 @@
         />
         <div class="control-list stations-list">
           <label
-            v-for="station in visibleStations"
-            :key="station.name"
+            v-for="station in visibleStationGroups"
+            :key="station.label"
             class="control-item"
           >
             <input
               type="checkbox"
-              :checked="!deselectedStations.has(station.name)"
-              @change="toggleStation(station.name)"
+              :checked="station.allSelected"
+              :indeterminate.prop="station.indeterminate"
+              @change="toggleStationGroup(station.names)"
             />
             <span>{{ station.label }}</span>
           </label>
@@ -62,7 +63,8 @@ import { tubeMap } from 'd3-tube-map';
 const container = ref(null);
 const baseData = ref(null);
 const lineNames = ref([]);
-const stations = ref([]);
+const stationGroups = ref([]);
+const stationNameToGroupNames = ref(new Map());
 const deselectedLines = ref(new Set());
 const deselectedStations = ref(new Set());
 const lineSearch = ref('');
@@ -76,21 +78,40 @@ const visibleLineNames = computed(() => {
   return lineNames.value.filter((line) => line.toLowerCase().includes(needle));
 });
 
-const visibleStations = computed(() => {
+const visibleStationGroups = computed(() => {
   const needle = stationSearch.value.toLowerCase();
+  const groupsWithState = stationGroups.value.map((group) => {
+    const activeCount = group.names.reduce(
+      (count, stationName) =>
+        deselectedStations.value.has(stationName) ? count : count + 1,
+      0,
+    );
+
+    return {
+      ...group,
+      allSelected: activeCount === group.names.length,
+      indeterminate: activeCount > 0 && activeCount < group.names.length,
+    };
+  });
+
   if (!needle) {
-    return stations.value;
+    return groupsWithState;
   }
-  return stations.value.filter(
-    (station) =>
-      station.label.toLowerCase().includes(needle) ||
-      station.name.toLowerCase().includes(needle),
+
+  return groupsWithState.filter(
+    (group) =>
+      group.label.toLowerCase().includes(needle) ||
+      group.names.some((name) => name.toLowerCase().includes(needle)),
   );
 });
 
 function parseLineName(name) {
   const divider = name.lastIndexOf('__chunk_');
   return divider >= 0 ? name.slice(0, divider) : name;
+}
+
+function normalizeStationLabel(label) {
+  return String(label).replace(/\s+/g, ' ').trim();
 }
 
 function stationPairs(nodes) {
@@ -153,7 +174,12 @@ function buildFilteredData(data) {
   const filteredLines = [];
   const hasStationFiltering = deselectedStations.value.size > 0;
 
-  for (const line of data.lines) {
+  for (let lineIdx = 0; lineIdx < data.lines.length; lineIdx += 1) {
+    const line = data.lines[lineIdx];
+    // Some inputs contain multiple line objects with the same `name` (e.g. branches of the Northern line).
+    // Ensure each rendered line id is unique, even when we aren't chunking for station filtering.
+    const sourceKey = `${line.name}__src_${lineIdx}`;
+
     if (deselectedLines.value.has(line.name)) {
       continue;
     }
@@ -168,7 +194,7 @@ function buildFilteredData(data) {
       filteredLines.push(
         normalizedLine(
           line,
-          `${line.name}__chunk_1`,
+          `${sourceKey}__chunk_1`,
           line.nodes.map((node) => cloneNode(node)),
         ),
       );
@@ -187,7 +213,7 @@ function buildFilteredData(data) {
 
       chunkCount += 1;
       filteredLines.push(
-        normalizedLine(line, `${line.name}__chunk_${chunkCount}`, currentChunkNodes),
+        normalizedLine(line, `${sourceKey}__chunk_${chunkCount}`, currentChunkNodes),
       );
       currentChunkNodes = null;
     };
@@ -265,7 +291,15 @@ function renderMap() {
       left: 100,
     })
     .on('click', (stationName) => {
-      toggleStation(stationName);
+      if (!stationName) {
+        return;
+      }
+      const groupNames = stationNameToGroupNames.value.get(stationName);
+      if (groupNames && groupNames.length) {
+        toggleStationGroup(groupNames);
+      } else {
+        toggleStation(stationName);
+      }
     });
 
   const root = d3.select(container.value);
@@ -312,6 +346,24 @@ function toggleStation(stationName) {
   renderMap();
 }
 
+function toggleStationGroup(stationNames) {
+  const next = new Set(deselectedStations.value);
+  const allSelected = stationNames.every((name) => !next.has(name));
+
+  if (allSelected) {
+    for (const name of stationNames) {
+      next.add(name);
+    }
+  } else {
+    for (const name of stationNames) {
+      next.delete(name);
+    }
+  }
+
+  deselectedStations.value = next;
+  renderMap();
+}
+
 onMounted(async () => {
   const mapDataUrl = `${import.meta.env.BASE_URL}london-tube.json`;
   const data = await d3.json(mapDataUrl);
@@ -322,12 +374,34 @@ onMounted(async () => {
   baseData.value = data;
 
   lineNames.value = [...new Set(data.lines.map((line) => line.name))];
-  stations.value = Object.entries(data.stations)
-    .map(([name, station]) => ({
-      name,
-      label: station.label || name,
+  const groups = new Map();
+
+  for (const [name, station] of Object.entries(data.stations)) {
+    const rawLabel = station?.label || name;
+    const label = normalizeStationLabel(rawLabel);
+    const existing = groups.get(label);
+
+    if (existing) {
+      existing.names.push(name);
+    } else {
+      groups.set(label, { label, names: [name] });
+    }
+  }
+
+  stationGroups.value = [...groups.values()]
+    .map((group) => ({
+      ...group,
+      names: [...group.names].sort((a, b) => a.localeCompare(b)),
     }))
     .sort((a, b) => a.label.localeCompare(b.label));
+
+  const nameToGroup = new Map();
+  for (const group of stationGroups.value) {
+    for (const stationName of group.names) {
+      nameToGroup.set(stationName, group.names);
+    }
+  }
+  stationNameToGroupNames.value = nameToGroup;
 
   renderMap();
 });
