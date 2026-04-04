@@ -561,7 +561,7 @@
     },
     "OxfordCircus": {
       "name": "OxfordCircus",
-      "label": "Oxford\nCircus"
+      "label": "Oxford Circus"
     },
     "WarrenStreet": {
       "name": "WarrenStreet",
@@ -858,9 +858,14 @@
       "name": "GoodgeStreet",
       "label": "Goodge\nStreet"
     },
-    "Tottenham": {
-      "name": "Tottenham",
-      "label": "Tottenham\nCourt Rd"
+    "TottenhamCourtRoadNorthern": {
+      "name": "TottenhamCourtRoadNorthern",
+      "label": "Tottenham\nCourt\nRoad"
+    },
+    "TottenhamCourtRoadCentral": {
+      "name": "TottenhamCourtRoadCentral",
+      "label": "Tottenham\nCourt\nRoad",
+      "hide": true
     },
     "GoldhawkRoad": {
       "name": "GoldhawkRoad",
@@ -962,9 +967,14 @@
       "name": "BethnalGreen",
       "label": "Bethnal\nGreen"
     },
-    "Stratford": {
-      "name": "Stratford",
+    "StratfordJubilee": {
+      "name": "StratfordJubilee",
       "label": "Stratford"
+    },
+    "StratfordCentral": {
+      "name": "StratfordCentral",
+      "label": "Stratford",
+      "hide": true
     },
     "Leyton": {
       "name": "Leyton",
@@ -980,15 +990,15 @@
     },
     "SouthWoodford": {
       "name": "SouthWoodford",
-      "label": "South\nWoodford"
+      "label": "South Woodford"
     },
     "Woodford": {
       "name": "Woodford",
       "label": "Woodford"
     },
-    "Buckhurst": {
-      "name": "Buckhurst",
-      "label": "Buckhurst\nHill"
+    "BuckhurstHill": {
+      "name": "BuckhurstHill",
+      "label": "Buckhurst Hill"
     },
     "Loughton": {
       "name": "Loughton",
@@ -998,9 +1008,9 @@
       "name": "Debden",
       "label": "Debden"
     },
-    "Theydon": {
-      "name": "Theydon",
-      "label": "Theydon\nBois"
+    "TheydonBois": {
+      "name": "TheydonBois",
+      "label": "Theydon Bois"
     },
     "Epping": {
       "name": "Epping",
@@ -1036,11 +1046,15 @@
     },
     "GrangeHill": {
       "name": "GrangeHill",
-      "label": "Grange\nHill"
+      "label": "Grange Hill"
     },
-    "Roding": {
-      "name": "Roding",
+    "RodingValley": {
+      "name": "RodingValley",
       "label": "Roding\nValley"
+    },
+    "Chigwell": {
+      "name": "Chigwell",
+      "label": "Chigwell"
     },
     "HarrowOnTheHill": {
       "name": "HarrowOnTheHill",
@@ -1186,7 +1200,7 @@
           "name": "OxfordCircus",
           "marker": "interchange",
           "canonical": true,
-          "labelPos": "NW"
+          "labelPos": "NE"
         },
         {
           "coords": [9, 35],
@@ -1436,11 +1450,11 @@
           "coords": [64, 27]
         },
         {
-          "coords": [54, 27],
+          "coords": [52, 27],
           "name": "LiverpoolStreet",
           "marker": "interchange",
           "canonical": true,
-          "labelPos": "N"
+          "labelPos": "SE"
         },
         {
           "coords": [44, 27],
@@ -1663,7 +1677,7 @@
           "coords": [64, 27]
         },
         {
-          "coords": [54, 27],
+          "coords": [52, 27],
           "name": "LiverpoolStreet",
           "marker": "interchange",
           "labelPos": "N"
@@ -1673,7 +1687,7 @@
           "name": "Moorgate",
           "marker": "interchange",
           "canonical": true,
-          "labelPos": "SE"
+          "labelPos": "SW"
         },
         {
           "coords": [43, 27]
@@ -2157,7 +2171,7 @@
         },
         {
           "coords": [125, 52],
-          "name": "Stratford",
+          "name": "StratfordJubilee",
           "marker": "interchange",
           "labelPos": "E"
         }
@@ -2177,9 +2191,231 @@
         },
         {
           "coords": [-4, 22],
-          "name": "OxfordCircus",
+          "name": "OxfordCircus"
+        },
+        {
+          "coords": [9, 22],
+          "name": "TottenhamCourtRoadCentral",
+          "marker": "interchange",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [16, 22]
+        },
+        {
+          "coords": [18, 21]
+        },
+        {
+          "coords": [19, 20],
+          "name": "Holborn",
+          "marker": "interchange",
+          "labelPos": "SW"
+        },
+        {
+          "coords": [20, 19]
+        },
+        {
+          "coords": [22, 18]
+        },
+        {
+          "coords": [26, 18],
+          "name": "ChanceryLane",
+          "labelPos": "S"
+        },
+        {
+          "coords": [33, 18],
+          "name": "StPauls",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [42, 18]
+        },
+        {
+          "coords": [44, 19]
+        },
+        {
+          "coords": [46, 21],
+          "name": "Bank",
+          "marker": "interchange",
+          "labelPos": "E"
+        },
+        {
+          "coords": [52, 27],
+          "name": "LiverpoolStreet",
           "marker": "interchange",
           "labelPos": "NW"
+        },
+        {
+          "coords": [54, 29]
+        },
+        {
+          "coords": [56, 30]
+        },
+        {
+          "coords": [82, 30],
+          "name": "BethnalGreen",
+          "labelPos": "N"
+        },
+        {
+          "coords": [87, 30]
+        },
+        {
+          "coords": [89, 29]
+        },
+        {
+          "coords": [91, 28]
+        },
+        {
+          "coords": [93, 28],
+          "name": "MileEnd",
+          "marker": "interchange",
+          "labelPos": "N"
+        },
+        {
+          "coords": [97, 28]
+        },
+        {
+          "coords": [99, 29]
+        },
+        {
+          "coords": [123, 53],
+          "name": "StratfordCentral",
+          "marker": "interchange",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [131, 61],
+          "name": "Leyton",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [134, 64]
+        },
+        {
+          "coords": [135, 66]
+        },
+        {
+          "coords": [135, 70],
+          "name": "Leytonstone",
+          "labelPos": "E"
+        },
+        {
+          "coords": [135, 80],
+          "name": "Snaresbrook",
+          "labelPos": "W"
+        },
+        {
+          "coords": [135, 87],
+          "name": "SouthWoodford",
+          "labelPos": "W"
+        },
+        {
+          "coords": [135, 94],
+          "name": "Woodford",
+          "labelPos": "W"
+        },
+        {
+          "coords": [135, 103]
+        },
+        {
+          "coords": [136, 105]
+        },
+        {
+          "coords": [137, 106],
+          "name": "BuckhurstHill",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [141, 110],
+          "name": "Loughton",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [144, 113],
+          "name": "Debden",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [147, 116],
+          "name": "TheydonBois",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [150, 119],
+          "name": "Epping",
+          "labelPos": "NW"
+        }
+      ]
+    },
+    {
+      "name": "Central",
+      "label": "Central",
+      "color": "#DC241F",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        {
+          "coords": [135, 94],
+          "name": "Woodford",
+          "labelPos": "W"
+        },
+        {
+          "coords": [135, 96]
+        },
+        {
+          "coords": [136, 97]
+        },
+        {
+          "coords": [138, 97],
+          "name": "RodingValley",
+          "labelPos": "N"
+        },
+        {
+          "coords": [142, 97],
+          "name": "Chigwell",
+          "labelPos": "S"
+        },
+        {
+          "coords": [146, 97],
+          "name": "GrangeHill",
+          "labelPos": "N"
+        },
+        {
+          "coords": [148, 97]
+        },
+        {
+          "coords": [149, 96]
+        },
+        {
+          "coords": [149, 94],
+          "name": "Hainault",
+          "labelPos": "E"
+        },
+        {
+          "coords": [149, 90],
+          "name": "Fairlop",
+          "labelPos": "E"
+        },
+        {
+          "coords": [149, 86],
+          "name": "Barkingside",
+          "labelPos": "E"
+        },
+        {
+          "coords": [149, 81],
+          "name": "NewburyPark",
+          "labelPos": "E"
+        },
+        {
+          "coords": [149, 79]
+        },
+        {
+          "coords": [148, 78]
+        },
+        {
+          "coords": [136, 78]
+        },
+        {
+          "coords": [135, 77]
         }
       ]
     },
@@ -2254,7 +2490,7 @@
         { "coords": [10, 38]},
         { "coords": [10, 35], "name": "WarrenStreet", "marker": "interchange", "labelPos": "E" },
         { "coords": [10, 30], "name": "GoodgeStreet", "labelPos": "W" },
-        { "coords": [10, 25], "name": "Tottenham", "labelPos": "NE" },
+        { "coords": [10, 24], "name": "TottenhamCourtRoadNorthern", "labelPos": "NE", "marker": "interchange" },
         { "coords": [10, 15], "name": "LeicesterSquare", "labelPos": "NW" },
         { "coords": [10, 6], "name": "CharingCross", "marker": "interchange", "labelPos": "NE" },
         { "coords": [10, 1], "name": "Embankment", "marker": "interchange", "labelPos": "SE" },

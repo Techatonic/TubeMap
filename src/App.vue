@@ -1,6 +1,6 @@
 <template>
   <main class="app-shell">
-    <h1>Tube Map Starter</h1>
+    <h1>Interactive Tube Map</h1>
     <TubeMap  />
   </main>
 </template>
