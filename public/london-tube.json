@@ -196,11 +196,11 @@
     },
     "DagenhamHeathway": {
       "name": "DagenhamHeathway",
-      "label": "Dagenham\nHeathway"
+      "label": "Dagenham Heathway"
     },
     "DagenhamEast": {
       "name": "DagenhamEast",
-      "label": "Dagenham\nEast"
+      "label": "Dagenham East"
     },
     "ElmPark": {
       "name": "ElmPark",
@@ -1703,6 +1703,145 @@
           "marker": "interchange",
           "canonical": true,
           "labelPos": "S"
+        }
+      ]
+    },
+    {
+      "name": "District",
+      "label": "District",
+      "color": "#0C6826",
+      "shiftCoords": [0, 0],
+      "shiftNormal": 0,
+      "nodes": [
+        {
+          "coords": [62, 15],
+          "name": "TowerHill",
+          "marker": "interchange",
+          "canonical": true,
+          "labelPos": "S"
+        },
+        {
+          "coords": [64, 15]
+        },
+        {
+          "coords": [65, 16]
+        },
+        {
+          "coords": [65, 20]
+        },
+        {
+          "coords": [66, 22]
+        },
+        {
+          "coords": [70, 26]
+        },
+        {
+          "coords": [72, 27]
+        },
+        {
+          "coords": [74, 27],
+          "name": "AldgateEast",
+          "labelPos": "S"
+        },
+        {
+          "coords": [77, 27],
+          "name": "Whitechapel",
+          "labelPos": "SE",
+          "marker": "interchange"
+        },
+        {
+          "coords": [90, 27],
+          "name": "StepneyGreen",
+          "labelPos": "S"
+        },
+        {
+          "coords": [93, 27],
+          "name": "MileEndDistrict",
+          "labelPos": "N",
+          "marker": "interchange"
+        },
+        {
+          "coords": [100, 27],
+          "name": "BowRoad",
+          "labelPos": "S"
+        },
+        {
+          "coords": [117, 27],
+          "name": "BromleyByBow",
+          "labelPos": "S"
+        },
+        {
+          "coords": [127, 27],
+          "name": "WestHamDistrict",
+          "labelPos": "NW",
+          "marker": "interchange"
+        },
+        {
+          "coords": [133, 27],
+          "name": "Plaistow",
+          "labelPos": "S"
+        },
+        {
+          "coords": [140, 27],
+          "name": "UptonPark",
+          "labelPos": "S"
+        },
+        {
+          "coords": [147, 27],
+          "name": "EastHam",
+          "labelPos": "S"
+        },
+        {
+          "coords": [154, 27],
+          "name": "Barking",
+          "labelPos": "S",
+          "marker": "interchange"
+        },
+        {
+          "coords": [156, 27]
+        },
+        {
+          "coords": [158, 28]
+        },
+        {
+          "coords": [160, 30],
+          "name": "Upney",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [164, 34],
+          "name": "Becontree",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [168, 38],
+          "name": "DagenhamHeathway",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [173, 43],
+          "name": "DagenhamEast",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [177, 47],
+          "name": "ElmPark",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [181, 51],
+          "name": "Hornchurch",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [185, 55],
+          "name": "UpminsterBridge",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [189, 59],
+          "name": "Upminster",
+          "labelPos": "SE"
         }
       ]
     },
