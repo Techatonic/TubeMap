@@ -114,6 +114,11 @@
     },
     "EdgwareRoadCir": {
       "name": "EdgwareRoadCir",
+      "label": "Edgware Road",
+      "hide": true
+    },
+    "EdgwareRoadDistrict": {
+      "name": "EdgwareRoadDistrict",
       "label": "Edgware Road"
     },
     "Paddington": {
@@ -128,8 +133,13 @@
       "name": "PaddingtonCircle2",
       "label": "Paddington"
     },
-    "EarlsCourt": {
-      "name": "EarlsCourt",
+    "EarlsCourtPiccadilly": {
+      "name": "EarlsCourtPiccadilly",
+      "label": "Earl's\nCourt",
+      "hide": true
+    },
+    "EarlsCourtDistrict": {
+      "name": "EarlsCourtDistrict",
       "label": "Earl's\nCourt"
     },
     "AldgateEast": {
@@ -224,15 +234,19 @@
     },
     "FulhamBroadway": {
       "name": "FulhamBroadway",
-      "label": "Fulham\nBroadway"
+      "label": "Fulham Broadway"
+    },
+    "ParsonsGreen": {
+      "name": "ParsonsGreen",
+      "label": "Parsons Green"
     },
     "PutneyBridge": {
       "name": "PutneyBridge",
-      "label": "Putney\nBridge"
+      "label": "Putney Bridge"
     },
     "EastPutney": {
       "name": "EastPutney",
-      "label": "East\nPutney"
+      "label": "East Putney"
     },
     "Southfields": {
       "name": "Southfields",
@@ -240,7 +254,7 @@
     },
     "WimbledonPark": {
       "name": "WimbledonPark",
-      "label": "Wimbledon\nPark"
+      "label": "Wimbledon Park"
     },
     "Wimbledon": {
       "name": "Wimbledon",
@@ -254,6 +268,11 @@
       "name": "BaronsCourt",
       "label": "Barons\nCourt"
     },
+    "BaronsCourtDistrict": {
+      "name": "BaronsCourtDistrict",
+      "label": "Barons\nCourt",
+      "hide": true
+    },
     "WestKensington": {
       "name": "WestKensington",
       "label": "West\nKensington"
@@ -262,12 +281,17 @@
       "name": "TurnhamGreen",
       "label": "Turnham\nGreen"
     },
+    "TurnhamGreenDistrict": {
+      "name": "TurnhamGreenDistrict",
+      "label": "Turnham\nGreen",
+      "hide": true
+    },
     "StamfordBrook": {
       "name": "StamfordBrook",
       "label": "Stamford\nBrook"
     },
-    "RavenscoutPark": {
-      "name": "RavenscoutPark",
+    "RavenscourtPark": {
+      "name": "RavenscourtPark",
       "label": "Ravenscourt\nPark"
     },
     "ChiswickPark": {
@@ -290,8 +314,18 @@
       "name": "ActonTown",
       "label": "Acton\nTown"
     },
+    "ActonTownDistrict": {
+      "name": "ActonTownDistrict",
+      "label": "Acton\nTown",
+      "hide": true
+    },
     "EalingCommon": {
       "name": "EalingCommon",
+      "label": "Ealing\nCommon",
+      "hide": true
+    },
+    "EalingCommonDistrict": {
+      "name": "EalingCommonDistrict",
       "label": "Ealing\nCommon"
     },
     "EalingBroadway": {
@@ -445,6 +479,11 @@
     "Hammersmith": {
       "name": "Hammersmith",
       "label": "Hammersmith"
+    },
+    "HammersmithDistrict": {
+      "name": "HammersmithDistrict",
+      "label": "Hammersmith",
+      "hide": true
     },
     "Stanmore": {
       "name": "Stanmore",
@@ -1356,18 +1395,93 @@
         {
           "coords": [-34, 40],
           "name": "EdgwareRoadCir",
-          "labelPos": "S"
+          "labelPos": "S",
+          "marker": "interchange"
         },
         {
-          "coords": [-41, 40]
+          "coords": [-44, 40],
+          "name": "PaddingtonCircle2",
+          "labelPos": "N",
+          "marker": "interchange"
         },
         {
-          "coords": [-42, 39]
+          "coords": [-46, 39]
         },
         {
-          "coords": [-42, 35],
+          "coords": [-52, 33],
+          "name": "RoyalOak",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [-56, 29],
+          "name": "WestbournePark",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-60, 25],
+          "name": "LadbrokeGrove",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-63, 22],
+          "name": "LatimerRoad",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-65, 20]
+        },
+        {
+          "coords": [-66, 18]
+        },
+        {
+          "coords": [-66, 12],
+          "name": "WoodLane",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-66, 9],
+          "name": "ShepherdsBushMarket",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-66, 6],
+          "name": "GoldhawkRoad",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-66, 3],
+          "name": "Hammersmith",
+          "labelPos": "NW",
+          "marker": "interchange"
+        }
+      ]
+    },
+    {
+      "name": "Circle",
+      "label": "Circle",
+      "color": "#FFD600",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        {
+          "coords": [-34, 37],
+          "name": "EdgwareRoadCir",
+          "labelPos": "S",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-39, 37]
+        },
+        {
+          "coords": [-41, 36]
+        },
+        {
+          "coords": [-42, 34]
+        },
+        {
+          "coords": [-42, 33],
           "name": "Paddington",
-          "labelPos": "E"
+          "labelPos": "E",
+          "marker": "interchange"
         },
         {
           "coords": [-42, 25],
@@ -1544,70 +1658,61 @@
       ]
     },
     {
-      "name": "Circle",
-      "label": "Circle",
-      "color": "#FFD600",
+      "name": "District",
+      "label": "District",
+      "color": "#0C6826",
       "shiftCoords": [0, 0],
+      "shiftNormal": -1,
       "nodes": [
         {
-          "coords": [-34, 40],
-          "name": "EdgwareRoadCir",
-          "labelPos": "S"
+          "coords": [-46, 1]
         },
         {
-          "coords": [-44, 40],
-          "name": "PaddingtonCircle2",
-          "labelPos": "N",
+          "coords": [-45, 1],
+          "name": "EarlsCourtDistrict",
+          "labelPos": "S",
           "marker": "interchange"
         },
         {
-          "coords": [-46, 39]
+          "coords": [-43, 2]
         },
         {
-          "coords": [-52, 33],
-          "name": "RoyalOak",
-          "labelPos": "NW"
+          "coords": [-42, 4]
         },
         {
-          "coords": [-56, 29],
-          "name": "WestbournePark",
-          "labelPos": "SE"
+          "coords": [-42, 10],
+          "name": "HighStreetKensington",
+          "labelPos": "E"
         },
         {
-          "coords": [-60, 25],
-          "name": "LadbrokeGrove",
-          "labelPos": "SE"
+          "coords": [-42, 15],
+          "name": "NottingHillGate",
+          "labelPos": "E"
         },
         {
-          "coords": [-63, 22],
-          "name": "LatimerRoad",
-          "labelPos": "SE"
+          "coords": [-42, 25],
+          "name": "Bayswater",
+          "labelPos": "E"
         },
         {
-          "coords": [-65, 20]
+          "coords": [-42, 33],
+          "name": "Paddington",
+          "labelPos": "E",
+          "marker": "interchange"
         },
         {
-          "coords": [-66, 18]
+          "coords": [-42, 34]
         },
         {
-          "coords": [-66, 12],
-          "name": "WoodLane",
-          "labelPos": "W"
+          "coords": [-41, 36]
         },
         {
-          "coords": [-66, 9],
-          "name": "ShepherdsBushMarket",
-          "labelPos": "W"
+          "coords": [-39, 37]
         },
         {
-          "coords": [-66, 6],
-          "name": "GoldhawkRoad",
-          "labelPos": "W"
-        },
-        {
-          "coords": [-66, 3],
-          "name": "Hammersmith",
-          "labelPos": "NW",
+          "coords": [-34, 37],
+          "name": "EdgwareRoadDistrict",
+          "labelPos": "S",
           "marker": "interchange"
         }
       ]
@@ -1619,6 +1724,217 @@
       "shiftCoords": [0, 0],
       "shiftNormal": 1,
       "nodes": [
+        {
+          "coords": [-45, 1],
+          "name": "EarlsCourtDistrict",
+          "labelPos": "S",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-46, 1]
+        },
+        {
+          "coords": [-48, 2]
+        },
+        {
+          "coords": [-49, 4]
+        },
+        {
+          "coords": [-49, 10],
+          "name": "KensingtonOlympia",
+          "labelPos": "W",
+          "marker": "interchange"
+        }
+      ]
+    },
+    {
+      "name": "District",
+      "label": "District",
+      "color": "#0C6826",
+      "shiftCoords": [0, 0],
+      "shiftNormal": -1,
+      "nodes": [
+        {
+          "coords": [-45, 1],
+          "name": "EarlsCourtDistrict",
+          "labelPos": "S",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-46, 1]
+        },
+        {
+          "coords": [-48, 0]
+        },
+        {
+          "coords": [-49, -2]
+        },
+        {
+          "coords": [-49, -7],
+          "name": "WestBrompton",
+          "labelPos": "W",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-49, -19],
+          "name": "FulhamBroadway",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-49, -22],
+          "name": "ParsonsGreen",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-49, -25],
+          "name": "PutneyBridge",
+          "labelPos": "W",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-49, -32],
+          "name": "EastPutney",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-49, -37],
+          "name": "Southfields",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-49, -41],
+          "name": "WimbledonPark",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-49, -45],
+          "name": "Wimbledon",
+          "labelPos": "W"
+        }
+      ]
+    },
+    {
+      "name": "District",
+      "label": "District",
+      "color": "#0C6826",
+      "shiftCoords": [0, 0],
+      "shiftNormal": -1,
+      "nodes": [
+        {
+          "coords": [-86, 1],
+          "name": "TurnhamGreenDistrict",
+          "labelPos": "N",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-94, 1]
+        },
+        {
+          "coords": [-96, 0]
+        },
+        {
+          "coords": [-104, -8],
+          "name": "Gunnersbury",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-116, -20],
+          "name": "KewGardens",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-123, -27],
+          "name": "Richmond",
+          "labelPos": "SE"
+        }
+      ]
+    },
+    {
+      "name": "District",
+      "label": "District",
+      "color": "#0C6826",
+      "shiftCoords": [0, 0],
+      "shiftNormal": 1,
+      "nodes": [
+        {
+          "coords": [-117, 15],
+          "name": "EalingBroadway",
+          "labelPos": "N",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-113, 15]
+        },
+        {
+          "coords": [-112, 14]
+        },
+        {
+          "coords": [-112, 10],
+          "name": "EalingCommonDistrict",
+          "labelPos": "W",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-112, 2]
+        },
+        {
+          "coords": [-111, 1]
+        },
+        {
+          "coords": [-109, 1],
+          "name": "ActonTownDistrict",
+          "labelPos": "N",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-104, 1],
+          "name": "ChiswickPark",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-86, 1],
+          "name": "TurnhamGreenDistrict",
+          "labelPos": "N",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-79, 1],
+          "name": "StamfordBrook",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-70, 1],
+          "name": "RavenscourtPark",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-66.5, 1],
+          "name": "HammersmithDistrict",
+          "labelPos": "S",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-58, 1],
+          "name": "BaronsCourtDistrict",
+          "labelPos": "N",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-54, 1],
+          "name": "WestKensington",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-45, 1],
+          "name": "EarlsCourtDistrict",
+          "labelPos": "S",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-34, 1],
+          "name": "GloucesterRoad",
+          "labelPos": "N"
+        },
         {
           "coords": [-29, 1],
           "name": "SouthKensington",
@@ -2450,7 +2766,8 @@
         {
           "coords": [-117, 15],
           "name": "EalingBroadway",
-          "labelPos": "N"
+          "labelPos": "N",
+          "marker": "interchange"
         },
         {
           "coords": [-97, 15],
@@ -3092,7 +3409,8 @@
         {
           "coords": [-111, 10],
           "name": "EalingCommon",
-          "labelPos": "W"
+          "labelPos": "W",
+          "marker": "interchange"
         },
         {
           "coords": [-111, 4]
@@ -3109,7 +3427,7 @@
         {
           "coords": [-86, 3],
           "name": "TurnhamGreen",
-          "labelPos": "S",
+          "labelPos": "N",
           "marker": "interchange"
         },
         {
@@ -3120,12 +3438,14 @@
         {
           "coords": [-58, 3],
           "name": "BaronsCourt",
-          "labelPos": "N"
+          "labelPos": "N",
+          "marker": "interchange"
         },
         {
           "coords": [-45, 3],
-          "name": "EarlsCourt",
-          "labelPos": "S"
+          "name": "EarlsCourtPiccadilly",
+          "labelPos": "S",
+          "marker": "interchange"
         },
         {
           "coords": [-34, 3],
@@ -3461,7 +3781,8 @@
         {
           "coords": [-34, 40],
           "name": "EdgwareRoadCir",
-          "labelPos": "S"
+          "labelPos": "S",
+          "marker": "interchange"
         },
         {
           "coords": [-12, 40],
