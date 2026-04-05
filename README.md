@@ -49,6 +49,18 @@ npm run dev -- --force
 npm run build
 ```
 
+### Install On Phone (PWA)
+
+This project can be installed as a Progressive Web App.
+
+1. Build: `npm run build`
+2. Host the `dist/` folder on an HTTPS site (Netlify, Vercel, GitHub Pages, etc.)
+3. On your phone:
+   - iOS (Safari): open the site, Share, Add to Home Screen
+   - Android (Chrome): open the site, menu, Install app
+
+Offline support is provided by a simple service worker (`public/sw.js`) after the first successful load.
+
 ### Preview production build
 
 ```bash
