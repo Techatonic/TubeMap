@@ -148,13 +148,27 @@
       "name": "MileEnd",
       "label": "Mile End"
     },
+    "MileEndDistrict": {
+      "name": "MileEndDistrict",
+      "label": "Mile End",
+      "hide": true
+    },
+    "BromleyByBow": {
+      "name": "BromleyByBow",
+      "label": "Bromley-\nby-Bow"
+    },
     "BowRoad": {
       "name": "BowRoad",
       "label": "Bow Road"
     },
     "WestHam": {
       "name": "WestHam",
-      "label": "West Ham"
+      "label": "West\nHam"
+    },
+    "WestHamDistrict": {
+      "name": "WestHamDistrict",
+      "label": "West Ham",
+      "hide": true
     },
     "Plaistow": {
       "name": "Plaistow",
@@ -162,7 +176,7 @@
     },
     "UptonPark": {
       "name": "UptonPark",
-      "label": "Upton Park"
+      "label": "Upton\nPark"
     },
     "EastHam": {
       "name": "EastHam",
@@ -2212,7 +2226,7 @@
           "labelPos": "SE"
         },
         {
-          "coords": [125, 25],
+          "coords": [125, 30],
           "name": "WestHam",
           "marker": "interchange",
           "labelPos": "NW"
@@ -2420,36 +2434,36 @@
           "labelPos": "NW"
         },
         {
-          "coords": [54, 29]
+          "coords": [56, 31]
         },
         {
-          "coords": [56, 30]
+          "coords": [58, 32]
         },
         {
-          "coords": [82, 30],
+          "coords": [82, 32],
           "name": "BethnalGreen",
           "labelPos": "N"
         },
         {
-          "coords": [87, 30]
+          "coords": [87, 32]
         },
         {
-          "coords": [89, 29]
+          "coords": [89, 31]
         },
         {
-          "coords": [91, 28]
+          "coords": [91, 30]
         },
         {
-          "coords": [93, 28],
+          "coords": [93, 30],
           "name": "MileEnd",
           "marker": "interchange",
           "labelPos": "N"
         },
         {
-          "coords": [97, 28]
+          "coords": [99, 30]
         },
         {
-          "coords": [99, 29]
+          "coords": [101, 31]
         },
         {
           "coords": [123, 53],
@@ -3240,6 +3254,189 @@
         },
         {
           "coords": [-153, -32]
+        }
+      ]
+    },
+    {
+      "name": "HammersmithCity",
+      "label": "Hammersmith & City",
+      "color": "#F589A6",
+      "shiftNormal": -1,
+      "nodes": [
+        {
+          "coords": [-66, 3],
+          "name": "Hammersmith",
+          "labelPos": "NW",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-66, 6],
+          "name": "GoldhawkRoad",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-66, 9],
+          "name": "ShepherdsBushMarket",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-66, 12],
+          "name": "WoodLane",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-66, 18]
+        },
+        {
+          "coords": [-65, 20]
+        },
+        {
+          "coords": [-63, 22],
+          "name": "LatimerRoad",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-60, 25],
+          "name": "LadbrokeGrove",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-56, 29],
+          "name": "WestbournePark",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-52, 33],
+          "name": "RoyalOak",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [-46, 39]
+        },
+        {
+          "coords": [-44, 40],
+          "name": "PaddingtonCircle2",
+          "labelPos": "N",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-34, 40],
+          "name": "EdgwareRoadCir",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-12, 40],
+          "name": "BakerStreet",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [-2, 40],
+          "name": "GreatPortlandStreet",
+          "labelPos": "S"
+        },
+        {
+          "coords": [7, 40],
+          "name": "EustonSquare",
+          "labelPos": "S"
+        },
+        {
+          "coords": [25, 40],
+          "name": "KingsCrossStPancras_CirMet",
+          "marker": "interchange",
+          "labelPos": "S"
+        },
+        {
+          "coords": [28, 40]
+        },
+        {
+          "coords": [30, 39]
+        },
+        {
+          "coords": [33, 36],
+          "name": "Farringdon",
+          "labelPos": "SW"
+        },
+        {
+          "coords": [38, 31],
+          "name": "Barbican",
+          "labelPos": "SW"
+        },
+        {
+          "coords": [41, 28]
+        },
+        {
+          "coords": [43, 27]
+        },
+        {
+          "coords": [44, 27],
+          "name": "Moorgate",
+          "marker": "interchange",
+          "labelPos": "SW"
+        },
+        {
+          "coords": [52, 27],
+          "name": "LiverpoolStreet",
+          "marker": "interchange",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [74, 27],
+          "name": "AldgateEast",
+          "labelPos": "S"
+        },
+        {
+          "coords": [77, 27],
+          "name": "Whitechapel",
+          "labelPos": "SE",
+          "marker": "interchange"
+        },
+        {
+          "coords": [90, 27],
+          "name": "StepneyGreen",
+          "labelPos": "S"
+        },
+        {
+          "coords": [93, 27],
+          "name": "MileEndDistrict",
+          "labelPos": "N",
+          "marker": "interchange"
+        },
+        {
+          "coords": [100, 27],
+          "name": "BowRoad",
+          "labelPos": "S"
+        },
+        {
+          "coords": [117, 27],
+          "name": "BromleyByBow",
+          "labelPos": "S"
+        },
+        {
+          "coords": [127, 27],
+          "name": "WestHamDistrict",
+          "labelPos": "NW",
+          "marker": "interchange"
+        },
+        {
+          "coords": [133, 27],
+          "name": "Plaistow",
+          "labelPos": "S"
+        },
+        {
+          "coords": [140, 27],
+          "name": "UptonPark",
+          "labelPos": "S"
+        },
+        {
+          "coords": [147, 27],
+          "name": "EastHam",
+          "labelPos": "S"
+        },
+        {
+          "coords": [154, 27],
+          "name": "Barking",
+          "labelPos": "S",
+          "marker": "interchange"
         }
       ]
     }
