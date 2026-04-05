@@ -14,11 +14,21 @@
     },
     "GloucesterRoad": {
       "name": "GloucesterRoad",
+      "label": "Gloucester\nRoad",
+      "hide": true
+    },
+    "GloucesterRoadPiccadilly": {
+      "name": "GloucesterRoadPiccadilly",
       "label": "Gloucester\nRoad"
     },
     "SouthKensington": {
       "name": "SouthKensington",
       "label": "South\nKensington"
+    },
+    "SouthKensingtonPiccadilly": {
+      "name": "SouthKensingtonPiccadilly",
+      "label": "South\nKensington",
+      "hide": true
     },
     "SloaneSquare": {
       "name": "SloaneSquare",
@@ -278,6 +288,10 @@
       "name": "NorthEaling",
       "label": "North\nEaling"
     },
+    "SouthEaling": {
+      "name": "SouthEaling",
+      "label": "South\nEaling"
+    },
     "ParkRoyal": {
       "name": "ParkRoyal",
       "label": "Park\nRoyal"
@@ -292,7 +306,7 @@
     },
     "SudburyTown": {
       "name": "SudburyTown",
-      "label": "Sudbury\nTown"
+      "label": "Sudbury Town"
     },
     "SudburyHill": {
       "name": "SudburyHill",
@@ -330,17 +344,21 @@
       "name": "RussellSquare",
       "label": "Russell\nSquare"
     },
-    "Caledonian": {
-      "name": "Caledonian",
+    "CaledonianRoad": {
+      "name": "CaledonianRoad",
       "label": "Caledonian\nRoad"
     },
     "HollowayRoad": {
       "name": "HollowayRoad",
       "label": "Holloway\nRoad"
     },
+    "Arsenal": {
+      "name": "Arsenal",
+      "label": "Arsenal"
+    },
     "ManorHouse": {
       "name": "ManorHouse",
-      "label": "Manor\nHouse"
+      "label": "Manor House"
     },
     "TurnpikeLane": {
       "name": "TurnpikeLane",
@@ -352,11 +370,11 @@
     },
     "BoundsGreen": {
       "name": "BoundsGreen",
-      "label": "Bounds\nGreen"
+      "label": "Bounds Green"
     },
     "ArnosGrove": {
       "name": "ArnosGrove",
-      "label": "Arnos\nGrove"
+      "label": "Arnos Grove"
     },
     "Southgate": {
       "name": "Southgate",
@@ -372,39 +390,39 @@
     },
     "HattonCross": {
       "name": "HattonCross",
-      "label": "Hatton\nCross"
+      "label": "Hatton Cross"
     },
-    "Heathrow123": {
-      "name": "Heathrow123",
-      "label": "Heathrow\nT1,2,3"
+    "Heathrow23": {
+      "name": "Heathrow23",
+      "label": "Heathrow\nTerminals\n2 & 3"
     },
     "Heathrow4": {
       "name": "Heathrow4",
-      "label": "Heathrow\nT4"
+      "label": "Heathrow\nTerminal 4"
     },
     "Heathrow5": {
       "name": "Heathrow5",
-      "label": "Heathrow\nT5"
+      "label": "Heathrow\nTerminal 5"
     },
-    "Hounslow": {
-      "name": "Hounslow",
-      "label": "Hounslow"
+    "HounslowWest": {
+      "name": "HounslowWest",
+      "label": "Hounslow West"
     },
     "HounslowCentral": {
       "name": "HounslowCentral",
-      "label": "Hounslow\nCentral"
+      "label": "Hounslow Central"
     },
     "HounslowEast": {
       "name": "HounslowEast",
-      "label": "Hounslow\nEast"
+      "label": "Hounslow East"
     },
     "Osterley": {
       "name": "Osterley",
       "label": "Osterley"
     },
-    "Boston": {
-      "name": "Boston",
-      "label": "Boston\nManor"
+    "BostonManor": {
+      "name": "BostonManor",
+      "label": "Boston Manor"
     },
     "Northfields": {
       "name": "Northfields",
@@ -412,10 +430,6 @@
     },
     "Hammersmith": {
       "name": "Hammersmith",
-      "label": "Hammersmith"
-    },
-    "HammersmithCircle": {
-      "name": "HammersmithCircle",
       "label": "Hammersmith"
     },
     "Stanmore": {
@@ -588,6 +602,11 @@
     "FinsburyPark": {
       "name": "FinsburyPark",
       "label": "Finsbury\nPark"
+    },
+    "FinsburyParkPiccadilly": {
+      "name": "FinsburyParkPiccadilly",
+      "label": "Finsbury\nPark",
+      "hide": true
     },
     "SevenSisters": {
       "name": "SevenSisters",
@@ -919,9 +938,9 @@
       "name": "Eastcote",
       "label": "Eastcote"
     },
-    "RaynersLanePiccadilly": {
-      "name": "RaynersLanePiccadilly",
-      "label": "Rayners Lane"
+    "RaynersLane": {
+      "name": "RaynersLane",
+      "label": "Rayners\nLane"
     },
     "Northolt": {
       "name": "Northolt",
@@ -1083,11 +1102,6 @@
     "WestHarrow": {
       "name": "WestHarrow",
       "label": "West\nHarrow"
-    },
-    "RaynersLaneMetropolitan": {
-      "name": "RaynersLaneMetropolitan",
-      "label": "Rayners\nLane",
-      "hide": true
     },
     "NorthHarrow": {
       "name": "NorthHarrow",
@@ -1257,7 +1271,7 @@
           "coords": [50, 62],
           "name": "HighburyIslington",
           "marker": "interchange",
-          "labelPos": "NW"
+          "labelPos": "E"
         },
         {
           "coords": [50, 69]
@@ -1578,8 +1592,9 @@
         },
         {
           "coords": [-66, 3],
-          "name": "HammersmithCircle",
-          "labelPos": "W"
+          "name": "Hammersmith",
+          "labelPos": "NW",
+          "marker": "interchange"
         }
       ]
     },
@@ -1784,59 +1799,72 @@
           "coords": [-84, 80],
           "name": "HarrowOnTheHill",
           "labelPos": "S"
+        }
+      ]
+    },
+    {
+      "name": "Metropolitan",
+      "label": "Metropolitan",
+      "color": "#89014C",
+      "shiftCoords": [0, 0],
+      "nodes": [
+        {
+          "coords": [-84, 79],
+          "name": "HarrowOnTheHill",
+          "labelPos": "S"
         },
         {
-          "coords": [-94, 80],
+          "coords": [-94, 79],
           "name": "WestHarrow",
           "labelPos": "S"
         },
         {
-          "coords": [-103, 80]
+          "coords": [-103, 79]
         },
         {
-          "coords": [-105, 81]
+          "coords": [-105, 80]
         },
         {
-          "coords": [-111, 87],
-          "name": "RaynersLaneMetropolitan",
+          "coords": [-111, 86],
+          "name": "RaynersLane",
           "marker": "interchange",
           "labelPos": "SW"
         },
         {
-          "coords": [-114, 90],
+          "coords": [-114, 89],
           "name": "Eastcote",
           "labelPos": "NE"
         },
         {
-          "coords": [-116, 92]
+          "coords": [-116, 91]
         },
         {
-          "coords": [-117, 93]
+          "coords": [-117, 92]
         },
         {
-          "coords": [-119, 94],
+          "coords": [-119, 93],
           "name": "RuislipManor",
           "labelPos": "N"
         },
         {
-          "coords": [-123, 94],
+          "coords": [-123, 93],
           "name": "Ruislip",
           "labelPos": "S"
         },
         {
-          "coords": [-134, 94],
+          "coords": [-134, 93],
           "name": "Ickenham",
           "marker": "interchange",
           "labelPos": "S"
         },
         {
-          "coords": [-144, 94],
+          "coords": [-144, 93],
           "name": "Hillingdon",
           "marker": "interchange",
           "labelPos": "N"
         },
         {
-          "coords": [-154, 94],
+          "coords": [-154, 93],
           "name": "Uxbridge",
           "marker": "interchange",
           "labelPos": "S"
@@ -2355,7 +2383,7 @@
           "coords": [19, 20],
           "name": "Holborn",
           "marker": "interchange",
-          "labelPos": "SW"
+          "labelPos": "E"
         },
         {
           "coords": [20, 19]
@@ -2637,7 +2665,7 @@
         { "coords": [10, 35], "name": "WarrenStreet", "marker": "interchange", "labelPos": "E" },
         { "coords": [10, 30], "name": "GoodgeStreet", "labelPos": "W" },
         { "coords": [10, 24], "name": "TottenhamCourtRoadNorthern", "labelPos": "NE", "marker": "interchange" },
-        { "coords": [10, 15], "name": "LeicesterSquare", "labelPos": "NW" },
+        { "coords": [10, 15], "name": "LeicesterSquare", "labelPos": "SE", "marker": "interchange" },
         { "coords": [10, 6], "name": "CharingCross", "marker": "interchange", "labelPos": "NE" },
         { "coords": [10, 1], "name": "Embankment", "marker": "interchange", "labelPos": "SE" },
         { "coords": [10, -12], "name": "WaterlooNorthern", "marker": "interchange", "labelPos": "W" },
@@ -2775,6 +2803,444 @@
         { "coords": [-68, 75], "name": "SouthKenton", "labelPos": "W"},
         { "coords": [-68, 85], "name": "Kenton", "labelPos": "W"},
         { "coords": [-68, 96], "name": "HarrowAndWealdstone", "labelPos": "W"}
+      ]
+    },
+    {
+      "name": "Piccadilly",
+      "label": "Piccadilly",
+      "color": "#10069F",
+      "shiftNormal": 1,
+      "nodes": [
+        {
+          "coords": [
+            -154,
+            93
+          ],
+          "name": "Uxbridge",
+          "marker": "interchange",
+          "labelPos": "S"
+        },
+        {
+          "coords": [
+            -144,
+            93
+          ],
+          "name": "Hillingdon",
+          "marker": "interchange",
+          "labelPos": "N"
+        },
+        {
+          "coords": [
+            -134,
+            93
+          ],
+          "name": "Ickenham",
+          "marker": "interchange",
+          "labelPos": "S"
+        },
+        {
+          "coords": [
+            -123,
+            93
+          ],
+          "name": "Ruislip",
+          "labelPos": "S"
+        },
+        {
+          "coords": [
+            -119,
+            93
+          ],
+          "name": "RuislipManor",
+          "labelPos": "N"
+        },
+        {
+          "coords": [
+            -117,
+            92
+          ]
+        },
+        {
+          "coords": [
+            -116,
+            91
+          ]
+        },
+        {
+          "coords": [
+            -114,
+            89
+          ],
+          "name": "Eastcote",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [
+            -111,
+            86
+          ],
+          "name": "RaynersLane",
+          "marker": "interchange",
+          "labelPos": "SW"
+        },
+        {
+          "coords": [
+            -110,
+            84
+          ]
+        },
+        {
+          "coords": [
+            -110,
+            74
+          ],
+          "name": "SouthHarrow",
+          "labelPos": "E"
+        }
+      ]
+    },
+    {
+      "name": "Piccadilly",
+      "label": "Piccadilly",
+      "color": "#10069F",
+      "shiftNormal": 0,
+      "nodes": [
+        {
+          "coords": [-111, 74],
+          "name": "SouthHarrow",
+          "labelPos": "E"
+        },
+        {
+          "coords": [-111, 67],
+          "name": "SudburyHill",
+          "labelPos": "E"
+        },
+        {
+          "coords": [-111, 59],
+          "name": "SudburyTown",
+          "labelPos": "E"
+        },
+        {
+          "coords": [-111, 53],
+          "name": "Alperton",
+          "labelPos": "E"
+        },
+        {
+          "coords": [-111, 32],
+          "name": "ParkRoyal",
+          "labelPos": "W",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-111, 26],
+          "name": "NorthEaling",
+          "labelPos": "E"
+        },
+        {
+          "coords": [-111, 10],
+          "name": "EalingCommon",
+          "labelPos": "W"
+        },
+        {
+          "coords": [-111, 4]
+        },
+        {
+          "coords": [-110, 3]
+        },
+        {
+          "coords": [-109, 3],
+          "name": "ActonTown",
+          "labelPos": "NE",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-86, 3],
+          "name": "TurnhamGreen",
+          "labelPos": "S",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-66, 3],
+          "name": "Hammersmith",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [-58, 3],
+          "name": "BaronsCourt",
+          "labelPos": "N"
+        },
+        {
+          "coords": [-45, 3],
+          "name": "EarlsCourt",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-34, 3],
+          "name": "GloucesterRoadPiccadilly",
+          "labelPos": "N"
+        },
+        {
+          "coords": [-29, 3],
+          "name": "SouthKensingtonPiccadilly",
+          "labelPos": "S",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-28, 3]
+        },
+        {
+          "coords": [-26, 4]
+        },
+        {
+          "coords": [-24, 6],
+          "name": "Knightsbridge",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-20, 10],
+          "name": "HydeParkCorner",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [-16, 14]
+        },
+        {
+          "coords": [-14, 15]
+        },
+        {
+          "coords": [-9, 15],
+          "name": "GreenPark",
+          "labelPos": "NE"
+        },
+        {
+          "coords": [1, 15],
+          "name": "PiccadillyCircus",
+          "labelPos": "SW"
+        },
+        {
+          "coords": [10, 15],
+          "name": "LeicesterSquare",
+          "labelPos": "SE",
+          "marker": "interchange"
+        },
+        {
+          "coords": [13, 15]
+        },
+        {
+          "coords": [15, 16]
+        },
+        {
+          "coords": [16, 17],
+          "name": "CoventGarden",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [19, 20],
+          "name": "Holborn",
+          "labelPos": "E",
+          "marker": "interchange"
+        },
+        {
+          "coords": [24, 25]
+        },
+        {
+          "coords": [25, 27]
+        },
+        {
+          "coords": [25, 44],
+          "name": "KingsCrossStPancras_Nor",
+          "labelPos": "S",
+          "marker": "interchange"
+        },
+        {
+          "coords": [25, 48]
+        },
+        {
+          "coords": [26, 50]
+        },
+        {
+          "coords": [39, 63],
+          "name": "CaledonianRoad",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [42, 66],
+          "name": "HollowayRoad",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [46, 70],
+          "name": "Arsenal",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [53, 77],
+          "name": "FinsburyParkPiccadilly",
+          "labelPos": "SE",
+          "marker": "interchange"
+        },
+        {
+          "coords": [58, 82]
+        },
+        {
+          "coords": [59, 84]
+        },
+        {
+          "coords": [59, 85],
+          "name": "ManorHouse",
+          "labelPos": "E",
+          "marker": "interchange"
+        },
+        {
+          "coords": [59, 94],
+          "name": "TurnpikeLane",
+          "labelPos": "W"
+        },
+        {
+          "coords": [59, 100],
+          "name": "WoodGreen",
+          "labelPos": "W"
+        },
+        {
+          "coords": [59, 104],
+          "name": "BoundsGreen",
+          "labelPos": "W"
+        },
+        {
+          "coords": [59, 108],
+          "name": "ArnosGrove",
+          "labelPos": "W"
+        },
+        {
+          "coords": [59, 112],
+          "name": "Southgate",
+          "labelPos": "W"
+        },
+        {
+          "coords": [59, 116],
+          "name": "Oakwood",
+          "labelPos": "W"
+        },
+        {
+          "coords": [59, 120],
+          "name": "Cockfosters",
+          "labelPos": "W"
+        }
+      ]
+    },
+    {
+      "name": "Piccadilly",
+      "label": "Piccadilly",
+      "color": "#10069F",
+      "shiftNormal": 0,
+      "nodes": [
+        {
+          "coords": [-109, 3],
+          "name": "ActonTown",
+          "labelPos": "NE",
+          "marker": "interchange"
+        },
+        {
+          "coords": [-117, 3]
+        },
+        {
+          "coords": [-119, 2]
+        },
+        {
+          "coords": [-120, 1],
+          "name": "SouthEaling",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [-122, -1],
+          "name": "Northfields",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-125, -4],
+          "name": "BostonManor",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [-128, -7],
+          "name": "Osterley",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-131, -10],
+          "name": "HounslowEast",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-134, -13],
+          "name": "HounslowCentral",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-137, -16],
+          "name": "HounslowWest",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-142, -21],
+          "name": "HattonCross",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-145, -24],
+          "name": "Heathrow23",
+          "labelPos": "NW"
+        },
+        {
+          "coords": [-155, -34]
+        },
+        {
+          "coords": [-156, -36]
+        },
+        {
+          "coords": [-156, -39],
+          "name": "Heathrow5",
+          "labelPos": "S"
+        }
+      ]
+    },
+    {
+      "name": "Piccadilly",
+      "label": "Piccadilly",
+      "color": "#10069F",
+      "shiftNormal": 0,
+      "nodes": [
+        {
+          "coords": [-142, -21],
+          "name": "HattonCross",
+          "labelPos": "SE"
+        },
+        {
+          "coords": [-145, -24]
+        },
+        {
+          "coords": [-146, -26]
+        },
+        {
+          "coords": [-146, -38]
+        },
+        {
+          "coords": [-147, -39]
+        },
+        {
+          "coords": [-148, -39],
+          "name": "Heathrow4",
+          "labelPos": "S"
+        },
+        {
+          "coords": [-152, -39]
+        },
+        {
+          "coords": [-153, -38]
+        },
+        {
+          "coords": [-153, -32]
+        }
       ]
     }
   ]
