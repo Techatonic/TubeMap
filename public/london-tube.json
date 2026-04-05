@@ -3162,7 +3162,8 @@
         { "coords": [5, -38]},
         { "coords": [4, -40]},
         { "coords": [4, -41]},
-        { "coords": [3, -43]}
+        { "coords": [3, -43]},
+        { "coords": [2, -44], "name":  "Oval", "labelPos": "SE"}
       ]
     },
     {
