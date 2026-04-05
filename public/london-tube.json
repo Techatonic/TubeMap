@@ -3060,6 +3060,11 @@
         },
         {
           "coords": [135, 77]
+        },
+        {
+          "coords": [135, 70],
+          "name": "Leytonstone",
+          "labelPos": "E"
         }
       ]
     },
@@ -3713,7 +3718,15 @@
           "coords": [-153, -38]
         },
         {
-          "coords": [-153, -32]
+          "coords": [-153, -33]
+        },
+        {
+          "coords": [-152, -31]
+        },
+        {
+          "coords": [-145, -24],
+          "name": "Heathrow23",
+          "labelPos": "NW"
         }
       ]
     },

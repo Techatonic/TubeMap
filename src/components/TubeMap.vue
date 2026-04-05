@@ -1,6 +1,33 @@
 <template>
   <section class="tube-map-layout">
     <aside class="controls">
+      <section class="control-section control-actions">
+        <h2>Config</h2>
+        <div class="action-row">
+          <button type="button" class="action-btn" @click="exportConfigJson">
+            Export config
+          </button>
+          <button type="button" class="action-btn" @click="triggerImportConfig">
+            Import config
+          </button>
+          <input
+            ref="importConfigInputRef"
+            class="sr-only"
+            type="file"
+            accept="application/json,.json"
+            @change="onImportConfigFile"
+          />
+        </div>
+
+        <h2>Export</h2>
+        <div class="action-row">
+          <button type="button" class="action-btn" @click="exportMapPng">
+            Export PNG
+          </button>
+          <span v-if="exportError" class="action-error">{{ exportError }}</span>
+        </div>
+      </section>
+
       <section class="control-section">
         <h2>Lines</h2>
         <input
@@ -112,13 +139,17 @@ import { computed, onMounted, onBeforeUnmount, ref } from 'vue';
 import * as d3 from 'd3';
 import { tubeMap } from 'd3-tube-map';
 import { line as tubeLine } from 'd3-tube-map/src/curve';
+import { interchangeShift } from 'd3-tube-map/src/directions';
 
 const container = ref(null);
 const stationComboRef = ref(null);
+const importConfigInputRef = ref(null);
 const baseData = ref(null);
 const renderError = ref('');
+const exportError = ref('');
 const lastRenderedMap = ref(null);
 const dimmedOverlayCount = ref(0);
+const defaultMapTransform = ref('');
 const lineNames = ref([]);
 const lineNameToStations = ref(new Map());
 const stationGroups = ref([]);
@@ -537,7 +568,70 @@ function computeMapGeometry(data, width, height, margin) {
     yScale,
     lineWidth: lineWidthMultiplier * unitLength,
     lineWidthTickRatio,
+    lineWidthMultiplier,
   };
+}
+
+function positionInterchanges() {
+  const rendered = lastRenderedMap.value;
+  if (!container.value || !rendered) {
+    return;
+  }
+
+  const root = d3.select(container.value);
+  const svg = root.select('svg');
+  if (svg.empty()) {
+    return;
+  }
+
+  const { data, width, height, margin } = rendered;
+  const { xScale, yScale, lineWidthMultiplier } = computeMapGeometry(
+    data,
+    width,
+    height,
+    margin,
+  );
+
+  const safeShift = (markers) => {
+    try {
+      const shift = interchangeShift(markers);
+      if (
+        Array.isArray(shift) &&
+        shift.length === 2 &&
+        Number.isFinite(shift[0]) &&
+        Number.isFinite(shift[1])
+      ) {
+        return shift;
+      }
+    } catch {
+      // fall through
+    }
+    return [0, 0];
+  };
+
+  svg.selectAll('.interchanges path.interchange').each(function (d) {
+    const el = this;
+    const station = d;
+    if (!station || !Array.isArray(station.marker) || !station.marker.length) {
+      return;
+    }
+
+    if (!Number.isFinite(station.x) || !Number.isFinite(station.y)) {
+      return;
+    }
+
+    const shift = safeShift(station.marker);
+    const shiftX = Number.isFinite(station.marker[0].shiftX) ? station.marker[0].shiftX : 0;
+    const shiftY = Number.isFinite(station.marker[0].shiftY) ? station.marker[0].shiftY : 0;
+    const x = xScale(station.x + (shift[0] + shiftX) * lineWidthMultiplier);
+    const y = yScale(station.y + (shift[1] + shiftY) * lineWidthMultiplier);
+
+    if (!Number.isFinite(x) || !Number.isFinite(y)) {
+      return;
+    }
+
+    el.setAttribute('transform', `translate(${x},${y})`);
+  });
 }
 
 function renderMap() {
@@ -546,6 +640,7 @@ function renderMap() {
   }
 
   renderError.value = '';
+  exportError.value = '';
   d3.select(container.value).selectAll('*').remove();
 
   const filteredData = buildFilteredData(baseData.value);
@@ -598,12 +693,14 @@ function renderMap() {
   svg.call(zoomHandler);
   svg.call(zoomHandler.scaleTo, 1);
   svg.call(zoomHandler.translateTo, 830, 450);
+  defaultMapTransform.value = svg.select('g').attr('transform') || '';
 
   root.selectAll('.lines .line').on('click', (event, lineData) => {
     event.stopPropagation();
     toggleLine(parseSourceLineName(lineData?.name || ''));
   });
 
+  positionInterchanges();
   applyDeselectionStyles();
 }
 
@@ -733,6 +830,176 @@ function syncDeselectedLinesFromStations() {
   deselectedLines.value = next;
 }
 
+function downloadBlob(blob, filename) {
+  const url = URL.createObjectURL(blob);
+  try {
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
+function exportConfigJson() {
+  exportError.value = '';
+  const config = {
+    schema: 'tube-map-config',
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    deselectedStations: [...deselectedStations.value].sort((a, b) => a.localeCompare(b)),
+  };
+  const blob = new Blob([JSON.stringify(config, null, 2)], {
+    type: 'application/json',
+  });
+  downloadBlob(blob, 'tube-map-config.json');
+}
+
+function triggerImportConfig() {
+  exportError.value = '';
+  const el = importConfigInputRef.value;
+  if (!el) {
+    return;
+  }
+  el.value = '';
+  el.click();
+}
+
+async function onImportConfigFile(event) {
+  exportError.value = '';
+  const input = event.target;
+  const file = input?.files?.[0];
+  if (!file) {
+    return;
+  }
+
+  try {
+    const text = await file.text();
+    const parsed = JSON.parse(text);
+    const list = Array.isArray(parsed?.deselectedStations) ? parsed.deselectedStations : null;
+    if (!list) {
+      throw new Error('Invalid config: expected `deselectedStations` array.');
+    }
+
+    const next = new Set();
+    for (const name of list) {
+      if (typeof name === 'string' && name) {
+        next.add(name);
+      }
+    }
+
+    deselectedStations.value = next;
+    syncDeselectedLinesFromStations();
+    applyDeselectionStyles();
+  } catch (err) {
+    exportError.value = err instanceof Error ? err.message : String(err);
+    console.error('Import config failed:', err);
+  }
+}
+
+function buildExportSvgCss() {
+  // Inline a small amount of CSS so exported SVG -> PNG matches the on-screen state.
+  return `
+    .stations .station.is-deselected { opacity: 0.28; filter: grayscale(1); }
+    .labels .label.is-deselected text { opacity: 0.32; fill: #2b2b2b; }
+    .interchanges .interchange.is-deselected { opacity: 0.22; filter: grayscale(1); }
+
+    .labels .label.is-line-muted text { opacity: 0.28; fill: #5f6368 !important; }
+    .labels .label.is-line-deselected text { opacity: 0.18; fill: #5f6368 !important; }
+    .interchanges .interchange.is-line-muted { opacity: 0.22; filter: grayscale(1); fill: #9aa0a6 !important; stroke: #9aa0a6 !important; }
+    .interchanges .interchange.is-line-deselected { opacity: 0.14; filter: grayscale(1); fill: #9aa0a6 !important; stroke: #9aa0a6 !important; }
+
+    .lines .line.is-line-deselected { stroke: #9aa0a6 !important; opacity: 0.14; }
+    .stations .station.is-line-deselected { stroke: #9aa0a6 !important; opacity: 0.10; }
+  `;
+}
+
+async function exportMapPng() {
+  exportError.value = '';
+  if (!container.value) {
+    exportError.value = 'Map container missing.';
+    return;
+  }
+
+  const svgEl = container.value.querySelector('svg');
+  if (!svgEl) {
+    exportError.value = 'Map SVG not found.';
+    return;
+  }
+
+  // Clone and force default zoom transform (don’t disturb the live view).
+  const clone = svgEl.cloneNode(true);
+  if (!(clone instanceof SVGSVGElement)) {
+    exportError.value = 'Failed to clone SVG.';
+    return;
+  }
+
+  const rendered = lastRenderedMap.value;
+  const width = rendered?.width || Math.round(svgEl.getBoundingClientRect().width) || 1200;
+  const height = rendered?.height || Math.round(svgEl.getBoundingClientRect().height) || 800;
+
+  clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+  clone.setAttribute('width', String(width));
+  clone.setAttribute('height', String(height));
+  if (!clone.getAttribute('viewBox')) {
+    clone.setAttribute('viewBox', `0 0 ${width} ${height}`);
+  }
+
+  const g = clone.querySelector('g');
+  if (g && defaultMapTransform.value) {
+    g.setAttribute('transform', defaultMapTransform.value);
+  }
+
+  // White background so transparent areas don’t render black in some viewers.
+  const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  bg.setAttribute('x', '0');
+  bg.setAttribute('y', '0');
+  bg.setAttribute('width', String(width));
+  bg.setAttribute('height', String(height));
+  bg.setAttribute('fill', '#ffffff');
+  clone.insertBefore(bg, clone.firstChild);
+
+  const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
+  style.textContent = buildExportSvgCss();
+  clone.insertBefore(style, clone.firstChild);
+
+  const svgText = new XMLSerializer().serializeToString(clone);
+  const svgBlob = new Blob([svgText], { type: 'image/svg+xml;charset=utf-8' });
+  const url = URL.createObjectURL(svgBlob);
+
+  try {
+    const img = new Image();
+    await new Promise((resolve, reject) => {
+      img.onload = resolve;
+      img.onerror = reject;
+      img.src = url;
+    });
+
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) {
+      throw new Error('Canvas 2D context unavailable.');
+    }
+    ctx.drawImage(img, 0, 0, width, height);
+
+    const pngBlob = await new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('PNG export failed.'))), 'image/png');
+    });
+
+    downloadBlob(pngBlob, 'tube-map.png');
+  } catch (err) {
+    exportError.value = err instanceof Error ? err.message : String(err);
+    console.error('PNG export failed:', err);
+  } finally {
+    URL.revokeObjectURL(url);
+  }
+}
+
 onMounted(async () => {
   const mapDataUrl = `${import.meta.env.BASE_URL}london-tube.json`;
   const data = await d3.json(mapDataUrl);
@@ -826,7 +1093,7 @@ onBeforeUnmount(() => {
   padding: 0.85rem;
   overflow: hidden;
   display: grid;
-  grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
   gap: 0.75rem;
   height: 100%;
   min-height: 0;
@@ -866,6 +1133,56 @@ h2 {
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.control-actions {
+  min-height: auto;
+}
+
+.action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.action-btn {
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 0.65rem;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    border-color 120ms ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.10);
+}
+
+.action-btn:active {
+  transform: translateY(0);
+}
+
+.action-error {
+  font-size: 0.85rem;
+  color: rgba(180, 35, 24, 0.85);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .search-input {
