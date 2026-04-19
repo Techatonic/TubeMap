@@ -29,37 +29,23 @@
       </section>
 
       <section class="control-section">
-        <h2>Lines</h2>
-        <input
-          v-model.trim="lineSearch"
-          type="search"
-          class="search-input"
-          placeholder="Search lines"
-        />
-        <div class="pill-list">
-          <button
-            v-for="line in visibleLineNames"
-            :key="line"
-            type="button"
-            class="pill"
-            :class="{ 'is-off': deselectedLines.has(line) }"
-            @click="toggleLine(line)"
-          >
-            <span
-              class="pill-dot"
-              :style="{ background: lineColorByName.get(line) || '#9aa0a6' }"
-              aria-hidden="true"
-            />
-            <span class="pill-label">{{ line }}</span>
-          </button>
-        </div>
-      </section>
-
-      <section class="control-section">
-        <h2>
-          Stations
-          <span v-if="dimmedOverlayCount" class="section-meta">
-            {{ dimmedOverlayCount }} grey segments
+        <h2 class="section-title">
+          <span>Stations</span>
+          <span class="section-title-actions">
+            <span v-if="dimmedOverlayCount" class="section-meta">
+              {{ dimmedOverlayCount }} grey segments
+            </span>
+            <button
+              type="button"
+              class="section-title-btn"
+              :class="{ 'is-off': !showStationNames }"
+              @click="toggleStationNames"
+            >
+              Names: {{ showStationNames ? 'On' : 'Off' }}
+            </button>
+            <button type="button" class="section-title-btn" @click="clearAllStations">
+              Clear all
+            </button>
           </span>
         </h2>
         <div ref="stationComboRef" class="combo">
@@ -125,7 +111,11 @@
     </aside>
 
     <div class="map-shell">
-      <div ref="container" class="map-root" />
+      <div
+        ref="container"
+        class="map-root"
+        :class="{ 'is-hide-labels': !showStationNames }"
+      />
       <div v-if="renderError" class="map-error">
         <div class="map-error-title">Map failed to render</div>
         <div class="map-error-body">{{ renderError }}</div>
@@ -150,25 +140,13 @@ const exportError = ref('');
 const lastRenderedMap = ref(null);
 const dimmedOverlayCount = ref(0);
 const defaultMapTransform = ref('');
-const lineNames = ref([]);
-const lineNameToStations = ref(new Map());
 const stationGroups = ref([]);
 const stationNameToGroupNames = ref(new Map());
-const deselectedLines = ref(new Set());
 const deselectedStations = ref(new Set());
-const lineSearch = ref('');
 const stationSearch = ref('');
 const stationDropdownOpen = ref(false);
 const stationDropdownHighlight = ref(0);
-const lineColorByName = ref(new Map());
-
-const visibleLineNames = computed(() => {
-  const needle = lineSearch.value.toLowerCase();
-  if (!needle) {
-    return lineNames.value;
-  }
-  return lineNames.value.filter((line) => line.toLowerCase().includes(needle));
-});
+const showStationNames = ref(true);
 
 const visibleStationGroups = computed(() => {
   const needle = stationSearch.value.toLowerCase();
@@ -199,26 +177,6 @@ const visibleStationGroups = computed(() => {
 });
 
 const stationDropdownOptions = computed(() => visibleStationGroups.value.slice(0, 12));
-
-function parseLineName(name) {
-  const divider = name.lastIndexOf('__chunk_');
-  return divider >= 0 ? name.slice(0, divider) : name;
-}
-
-function parseSourceLineName(name) {
-  const chunkless = parseLineName(String(name ?? ''));
-  const divider = chunkless.lastIndexOf('__src_');
-  return divider >= 0 ? chunkless.slice(0, divider) : chunkless;
-}
-
-function markerLineNames(markers) {
-  if (!Array.isArray(markers)) {
-    return [];
-  }
-  return markers
-    .map((m) => parseSourceLineName(m?.line))
-    .filter(Boolean);
-}
 
 function normalizeStationLabel(label) {
   return String(label).replace(/\s+/g, ' ').trim();
@@ -346,59 +304,6 @@ function applyStationDeselectionStyles() {
     .classed('is-deselected', (d) => !!d && deselectedStations.value.has(d.name));
 }
 
-function applyWholeLineDeselectionStyles() {
-  const rendered = lastRenderedMap.value;
-  if (!container.value || !rendered) {
-    return;
-  }
-
-  const root = d3.select(container.value);
-  const svg = root.select('svg');
-  if (svg.empty()) {
-    return;
-  }
-
-  const isLineDeselected = (lineId) =>
-    deselectedLines.value.has(parseSourceLineName(lineId));
-
-  svg
-    .selectAll('.lines .line')
-    .classed('is-line-deselected', (d) => {
-      if (!d || !d.name) {
-        return false;
-      }
-      const lineName = parseSourceLineName(d.name);
-      return deselectedLines.value.has(lineName);
-    });
-
-  // Station tick marks are drawn per-line and have `d.line` set to the source line name.
-  svg
-    .selectAll('.stations .station')
-    .classed('is-line-deselected', (d) => !!d && isLineDeselected(d.line));
-
-  const hasAnyDeselectedMarker = (station) => {
-    const lines = markerLineNames(station?.marker);
-    return lines.some((line) => deselectedLines.value.has(line));
-  };
-
-  const hasAllMarkersDeselected = (station) => {
-    const lines = markerLineNames(station?.marker);
-    return lines.length > 0 && lines.every((line) => deselectedLines.value.has(line));
-  };
-
-  // Labels: data is the station object which contains `marker` entries per visible line at that station.
-  svg
-    .selectAll('.labels .label')
-    .classed('is-line-muted', (d) => !!d && hasAnyDeselectedMarker(d))
-    .classed('is-line-deselected', (d) => !!d && hasAllMarkersDeselected(d));
-
-  // Interchange symbols: a single symbol can represent multiple lines, so we mute it if any of its lines are off.
-  svg
-    .selectAll('.interchanges .interchange')
-    .classed('is-line-muted', (d) => !!d && hasAnyDeselectedMarker(d))
-    .classed('is-line-deselected', (d) => !!d && hasAllMarkersDeselected(d));
-}
-
 function applyLineDeselectionStyles() {
   const rendered = lastRenderedMap.value;
   if (!container.value || !rendered) {
@@ -458,7 +363,10 @@ function applyLineDeselectionStyles() {
     margin,
   );
 
-  const dimmedPaths = [];
+  // Some lines share the same exact geometry over a stretch (e.g. Circle/H&C/Met).
+  // If we draw the overlay multiple times, the strokes stack and look brighter.
+  // Dedup both layers (mask + grey trace) by the computed SVG path.
+  const dimmedPathByD = new Map();
   for (const seg of dimmedSegments) {
     try {
       const nodes = seg.line.nodes.slice(seg.pair.startIdx, seg.pair.endIdx + 1);
@@ -474,13 +382,16 @@ function applyLineDeselectionStyles() {
         lineWidthTickRatio,
       );
       if (d) {
-        dimmedPaths.push({ key: seg.key, d });
+        if (!dimmedPathByD.has(d)) {
+          dimmedPathByD.set(d, { key: d, d });
+        }
       }
     } catch (err) {
       // Don't let a single bad segment kill the whole overlay.
       console.warn('Failed to draw dim overlay segment', seg.key, err);
     }
   }
+  const dimmedPaths = [...dimmedPathByD.values()];
   dimmedOverlayCount.value = dimmedPaths.length;
 
   // Layer 1: "mask" the colored line so the segment becomes mostly invisible.
@@ -520,7 +431,6 @@ function applyLineDeselectionStyles() {
 
 function applyDeselectionStyles() {
   applyStationDeselectionStyles();
-  applyWholeLineDeselectionStyles();
   applyLineDeselectionStyles();
 }
 
@@ -695,36 +605,7 @@ function renderMap() {
   svg.call(zoomHandler.translateTo, 830, 450);
   defaultMapTransform.value = svg.select('g').attr('transform') || '';
 
-  root.selectAll('.lines .line').on('click', (event, lineData) => {
-    event.stopPropagation();
-    toggleLine(parseSourceLineName(lineData?.name || ''));
-  });
-
   positionInterchanges();
-  applyDeselectionStyles();
-}
-
-function toggleLine(lineName) {
-  const stations = lineNameToStations.value.get(lineName);
-  if (!stations || stations.size === 0) {
-    return;
-  }
-
-  const nextStations = new Set(deselectedStations.value);
-  const allOff = [...stations].every((name) => nextStations.has(name));
-
-  if (allOff) {
-    for (const name of stations) {
-      nextStations.delete(name);
-    }
-  } else {
-    for (const name of stations) {
-      nextStations.add(name);
-    }
-  }
-
-  deselectedStations.value = nextStations;
-  syncDeselectedLinesFromStations();
   applyDeselectionStyles();
 }
 
@@ -738,7 +619,6 @@ function toggleStation(stationName) {
   }
 
   deselectedStations.value = next;
-  syncDeselectedLinesFromStations();
   applyDeselectionStyles();
 }
 
@@ -757,8 +637,30 @@ function toggleStationGroup(stationNames) {
   }
 
   deselectedStations.value = next;
-  syncDeselectedLinesFromStations();
   applyDeselectionStyles();
+}
+
+function clearAllStations() {
+  if (!stationGroups.value.length) {
+    return;
+  }
+
+  const next = new Set();
+  for (const group of stationGroups.value) {
+    for (const name of group.names) {
+      next.add(name);
+    }
+  }
+
+  deselectedStations.value = next;
+  stationSearch.value = '';
+  stationDropdownHighlight.value = 0;
+  stationDropdownOpen.value = false;
+  applyDeselectionStyles();
+}
+
+function toggleStationNames() {
+  showStationNames.value = !showStationNames.value;
 }
 
 function openStationDropdown() {
@@ -814,20 +716,6 @@ function onWindowPointerDown(event) {
   if (event.target instanceof Node && !el.contains(event.target)) {
     closeStationDropdown();
   }
-}
-
-function syncDeselectedLinesFromStations() {
-  const next = new Set();
-  for (const [lineName, stations] of lineNameToStations.value.entries()) {
-    if (!stations || stations.size === 0) {
-      continue;
-    }
-    const allOff = [...stations].every((name) => deselectedStations.value.has(name));
-    if (allOff) {
-      next.add(lineName);
-    }
-  }
-  deselectedLines.value = next;
 }
 
 function downloadBlob(blob, filename) {
@@ -892,7 +780,6 @@ async function onImportConfigFile(event) {
     }
 
     deselectedStations.value = next;
-    syncDeselectedLinesFromStations();
     applyDeselectionStyles();
   } catch (err) {
     exportError.value = err instanceof Error ? err.message : String(err);
@@ -906,14 +793,7 @@ function buildExportSvgCss() {
     .stations .station.is-deselected { opacity: 0.28; filter: grayscale(1); }
     .labels .label.is-deselected text { opacity: 0.32; fill: #2b2b2b; }
     .interchanges .interchange.is-deselected { opacity: 0.22; filter: grayscale(1); }
-
-    .labels .label.is-line-muted text { opacity: 0.28; fill: #5f6368 !important; }
-    .labels .label.is-line-deselected text { opacity: 0.18; fill: #5f6368 !important; }
-    .interchanges .interchange.is-line-muted { opacity: 0.22; filter: grayscale(1); fill: #9aa0a6 !important; stroke: #9aa0a6 !important; }
-    .interchanges .interchange.is-line-deselected { opacity: 0.14; filter: grayscale(1); fill: #9aa0a6 !important; stroke: #9aa0a6 !important; }
-
-    .lines .line.is-line-deselected { stroke: #9aa0a6 !important; opacity: 0.14; }
-    .stations .station.is-line-deselected { stroke: #9aa0a6 !important; opacity: 0.10; }
+    ${showStationNames.value ? '' : '.labels { opacity: 0 !important; }'}
   `;
 }
 
@@ -1008,29 +888,6 @@ onMounted(async () => {
     return;
   }
   baseData.value = data;
-
-  const nextLineNames = new Set();
-  const nextLineColors = new Map();
-  const nextLineStations = new Map();
-  for (const line of data.lines) {
-    if (!line || !line.name) {
-      continue;
-    }
-    nextLineNames.add(line.name);
-    if (!nextLineColors.has(line.name) && line.color) {
-      nextLineColors.set(line.name, line.color);
-    }
-    const current = nextLineStations.get(line.name) || new Set();
-    for (const node of line.nodes || []) {
-      if (node && node.name) {
-        current.add(node.name);
-      }
-    }
-    nextLineStations.set(line.name, current);
-  }
-  lineNames.value = [...nextLineNames];
-  lineColorByName.value = nextLineColors;
-  lineNameToStations.value = nextLineStations;
   const groups = new Map();
 
   for (const [name, station] of Object.entries(data.stations)) {
@@ -1059,8 +916,6 @@ onMounted(async () => {
     }
   }
   stationNameToGroupNames.value = nameToGroup;
-
-  syncDeselectedLinesFromStations();
   renderMap();
 
   window.addEventListener('pointerdown', onWindowPointerDown, { capture: true });
@@ -1093,7 +948,7 @@ onBeforeUnmount(() => {
   padding: 0.85rem;
   overflow: hidden;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
   gap: 0.75rem;
   height: 100%;
   min-height: 0;
@@ -1113,6 +968,40 @@ h2 {
   align-items: baseline;
   justify-content: space-between;
   gap: 0.5rem;
+}
+
+.section-title-actions {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.section-title-btn {
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 999px;
+  padding: 0.2rem 0.5rem;
+  font-size: 0.78rem;
+  letter-spacing: 0;
+  text-transform: none;
+  cursor: pointer;
+  transition:
+    transform 120ms ease,
+    box-shadow 120ms ease,
+    border-color 120ms ease;
+}
+
+.section-title-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.10);
+}
+
+.section-title-btn:active {
+  transform: translateY(0);
+}
+
+.section-title-btn.is-off {
+  opacity: 0.65;
 }
 
 .section-meta {
@@ -1394,38 +1283,9 @@ h2 {
   filter: grayscale(1);
 }
 
-.map-root :deep(.labels .label.is-line-muted text) {
-  opacity: 0.28;
-  fill: #5f6368 !important;
-}
-
-.map-root :deep(.labels .label.is-line-deselected text) {
-  opacity: 0.18;
-  fill: #5f6368 !important;
-}
-
-.map-root :deep(.interchanges .interchange.is-line-muted) {
-  opacity: 0.22;
-  filter: grayscale(1);
-  fill: #9aa0a6 !important;
-  stroke: #9aa0a6 !important;
-}
-
-.map-root :deep(.interchanges .interchange.is-line-deselected) {
-  opacity: 0.14;
-  filter: grayscale(1);
-  fill: #9aa0a6 !important;
-  stroke: #9aa0a6 !important;
-}
-
-.map-root :deep(.lines .line.is-line-deselected) {
-  stroke: #9aa0a6 !important;
-  opacity: 0.14;
-}
-
-.map-root :deep(.stations .station.is-line-deselected) {
-  stroke: #9aa0a6 !important;
-  opacity: 0.10;
+.map-root.is-hide-labels :deep(.labels) {
+  opacity: 0;
+  pointer-events: none;
 }
 
 
