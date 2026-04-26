@@ -2,6 +2,8 @@
   font-family: 'Hammersmith One', sans-serif;
   color: #111;
   background: #f4f4f1;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
 * {
@@ -22,15 +24,44 @@ body {
 
 .app-shell {
   width: 100%;
+  min-height: 100vh;
   height: 100%;
-  padding: 1rem;
+  padding:
+    calc(1rem + env(safe-area-inset-top))
+    calc(1rem + env(safe-area-inset-right))
+    calc(1rem + env(safe-area-inset-bottom))
+    calc(1rem + env(safe-area-inset-left));
   display: grid;
   grid-template-rows: auto 1fr;
   gap: 0.75rem;
   min-height: 0;
 }
 
+@supports (min-height: 100svh) {
+  .app-shell {
+    min-height: 100svh;
+  }
+}
+
+@supports (min-height: 100dvh) {
+  .app-shell {
+    min-height: 100dvh;
+  }
+}
+
 h1 {
   margin: 0;
-  font-size: 1.5rem;
+  font-size: clamp(1.1rem, 3.2vw, 1.5rem);
+  line-height: 1.15;
+}
+
+@media (max-width: 520px) {
+  .app-shell {
+    gap: 0.6rem;
+    padding:
+      calc(0.75rem + env(safe-area-inset-top))
+      calc(0.75rem + env(safe-area-inset-right))
+      calc(0.75rem + env(safe-area-inset-bottom))
+      calc(0.75rem + env(safe-area-inset-left));
+  }
 }

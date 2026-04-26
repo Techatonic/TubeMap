@@ -80,7 +80,7 @@
                 'is-off': !opt.allSelected && !opt.indeterminate,
                 'is-mixed': opt.indeterminate,
               }"
-              @mousedown.prevent="selectStationOption(opt)"
+              @pointerdown.prevent="selectStationOption(opt)"
               @mousemove="stationDropdownHighlight = idx"
             >
               <span class="combo-option-label">{{ opt.label }}</span>
@@ -147,6 +147,8 @@ const stationSearch = ref('');
 const stationDropdownOpen = ref(false);
 const stationDropdownHighlight = ref(0);
 const showStationNames = ref(true);
+let resizeObserver = null;
+let pendingResizeFrame = 0;
 
 const visibleStationGroups = computed(() => {
   const needle = stationSearch.value.toLowerCase();
@@ -601,8 +603,37 @@ function renderMap() {
   });
 
   svg.call(zoomHandler);
-  svg.call(zoomHandler.scaleTo, 1);
-  svg.call(zoomHandler.translateTo, 830, 450);
+
+  // Center + fit to the rendered map bounds so mobile/desktop start in a sensible viewport.
+  try {
+    const g = svg.select('g').node();
+    if (g && g.getBBox) {
+      const bbox = g.getBBox();
+      if (bbox.width > 0 && bbox.height > 0) {
+        const pad = Math.min(24, Math.round(Math.min(width, height) * 0.06));
+        const fitScale = Math.min(
+          (width - pad * 2) / bbox.width,
+          (height - pad * 2) / bbox.height,
+          1,
+        );
+        const initialScale = Math.max(0.1, Math.min(6, fitScale));
+        svg.call(zoomHandler.scaleTo, initialScale);
+        svg.call(
+          zoomHandler.translateTo,
+          bbox.x + bbox.width / 2,
+          bbox.y + bbox.height / 2,
+        );
+      } else {
+        svg.call(zoomHandler.scaleTo, 1);
+      }
+    } else {
+      svg.call(zoomHandler.scaleTo, 1);
+    }
+  } catch (err) {
+    console.warn('Failed to fit map to viewport:', err);
+    svg.call(zoomHandler.scaleTo, 1);
+  }
+
   defaultMapTransform.value = svg.select('g').attr('transform') || '';
 
   positionInterchanges();
@@ -919,6 +950,21 @@ onMounted(async () => {
   renderMap();
 
   window.addEventListener('pointerdown', onWindowPointerDown, { capture: true });
+
+  if (typeof ResizeObserver !== 'undefined') {
+    resizeObserver = new ResizeObserver(() => {
+      if (pendingResizeFrame) {
+        return;
+      }
+      pendingResizeFrame = window.requestAnimationFrame(() => {
+        pendingResizeFrame = 0;
+        renderMap();
+      });
+    });
+    if (container.value) {
+      resizeObserver.observe(container.value);
+    }
+  }
 });
 
 onBeforeUnmount(() => {
@@ -926,6 +972,19 @@ onBeforeUnmount(() => {
     d3.select(container.value).selectAll('*').remove();
   }
   window.removeEventListener('pointerdown', onWindowPointerDown, { capture: true });
+
+  if (pendingResizeFrame) {
+    window.cancelAnimationFrame(pendingResizeFrame);
+    pendingResizeFrame = 0;
+  }
+  if (resizeObserver) {
+    try {
+      resizeObserver.disconnect();
+    } catch {
+      // ignore
+    }
+    resizeObserver = null;
+  }
 });
 </script>
 
@@ -946,7 +1005,9 @@ onBeforeUnmount(() => {
     radial-gradient(900px 500px at 120% 10%, rgba(255, 61, 0, 0.10), transparent 55%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.75), rgba(248, 248, 248, 0.7));
   padding: 0.85rem;
-  overflow: hidden;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   gap: 0.75rem;
@@ -1235,11 +1296,19 @@ h2 {
     0 12px 40px rgba(0, 0, 0, 0.10),
     0 1px 0 rgba(255, 255, 255, 0.8) inset;
   overflow: hidden;
+  touch-action: none;
 }
 
 .map-shell {
   position: relative;
   min-height: 0;
+}
+
+.map-root :deep(svg) {
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
 }
 
 .map-error {
@@ -1292,7 +1361,26 @@ h2 {
 @media (max-width: 980px) {
   .tube-map-layout {
     grid-template-columns: 1fr;
-    grid-template-rows: 320px 1fr;
+    grid-template-rows: clamp(220px, 42vh, 420px) 1fr;
+  }
+
+  .controls {
+    padding: 0.75rem;
+  }
+}
+
+@supports (height: 1svh) {
+  @media (max-width: 980px) {
+    .tube-map-layout {
+      grid-template-rows: clamp(220px, 42svh, 420px) 1fr;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  /* iOS Safari zooms focused inputs under 16px; keep the search input at 16px on phones. */
+  .search-input {
+    font-size: 16px;
   }
 }
 </style>
