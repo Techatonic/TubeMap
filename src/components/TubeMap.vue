@@ -150,6 +150,52 @@ const showStationNames = ref(true);
 let resizeObserver = null;
 let pendingResizeFrame = 0;
 
+function unionBBoxes(a, b) {
+  if (!a) {
+    return b ? { ...b } : null;
+  }
+  if (!b) {
+    return { ...a };
+  }
+
+  const x = Math.min(a.x, b.x);
+  const y = Math.min(a.y, b.y);
+  const x2 = Math.max(a.x + a.width, b.x + b.width);
+  const y2 = Math.max(a.y + a.height, b.y + b.height);
+
+  return { x, y, width: x2 - x, height: y2 - y };
+}
+
+function getMapFitBBox(mapGroupEl, includeLabels) {
+  // Use stable groups for fitting. Some browsers can report surprising results for
+  // getBBox on groups with transformed descendants (notably interchange markers),
+  // which then skews centering on small viewports.
+  if (!mapGroupEl || typeof mapGroupEl.querySelector !== 'function') {
+    return null;
+  }
+
+  const selectors = includeLabels ? ['.lines', '.stations', '.labels'] : ['.lines', '.stations'];
+  let bbox = null;
+
+  for (const sel of selectors) {
+    const el = mapGroupEl.querySelector(sel);
+    if (!el || typeof el.getBBox !== 'function') {
+      continue;
+    }
+
+    try {
+      const b = el.getBBox();
+      if (b && b.width > 0 && b.height > 0) {
+        bbox = unionBBoxes(bbox, b);
+      }
+    } catch {
+      // ignore and keep trying other groups
+    }
+  }
+
+  return bbox;
+}
+
 const visibleStationGroups = computed(() => {
   const needle = stationSearch.value.toLowerCase();
   const groupsWithState = stationGroups.value.map((group) => {
@@ -598,17 +644,27 @@ function renderMap() {
   lastRenderedMap.value = { data: filteredData, width, height, margin };
 
   const svg = root.select('svg');
+  // d3-zoom's default SVG extent uses width/height *attributes* (not CSS).
+  // If these are missing, translateTo/scaleTo won't reliably center (notably in Chrome device emulation).
+  // Prefer viewBox so the zoom extent is stable even if CSS sizing differs.
+  svg
+    .attr('width', String(width))
+    .attr('height', String(height))
+    .attr('viewBox', `0 0 ${width} ${height}`);
   const zoomHandler = d3.zoom().scaleExtent([0.1, 6]).on('zoom', (event) => {
     svg.select('g').attr('transform', event.transform.toString());
   });
 
   svg.call(zoomHandler);
 
+  // Ensure geometry (notably interchanges) is in final position before fitting to bounds.
+  positionInterchanges();
+
   // Center + fit to the rendered map bounds so mobile/desktop start in a sensible viewport.
   try {
     const g = svg.select('g').node();
     if (g && g.getBBox) {
-      const bbox = g.getBBox();
+      const bbox = getMapFitBBox(g, showStationNames.value) || g.getBBox();
       if (bbox.width > 0 && bbox.height > 0) {
         const pad = Math.min(24, Math.round(Math.min(width, height) * 0.06));
         const fitScale = Math.min(
@@ -636,7 +692,6 @@ function renderMap() {
 
   defaultMapTransform.value = svg.select('g').attr('transform') || '';
 
-  positionInterchanges();
   applyDeselectionStyles();
 }
 
@@ -889,14 +944,25 @@ async function exportMapPng() {
       img.src = url;
     });
 
+    // Export at a higher DPI by rasterizing into a larger canvas.
+    // Cap to avoid huge canvases on memory-constrained mobile browsers.
+    const requestedScale = Math.max(2, Math.min(4, window.devicePixelRatio || 2));
+    const maxSide = 8192;
+    const maxPixels = 32_000_000; // ~32MP
+    const scaleCapBySide = Math.min(maxSide / width, maxSide / height);
+    const scaleCapByPixels = Math.sqrt(maxPixels / (width * height));
+    const scale = Math.max(1, Math.min(requestedScale, scaleCapBySide, scaleCapByPixels));
+
     const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
+    canvas.width = Math.max(1, Math.round(width * scale));
+    canvas.height = Math.max(1, Math.round(height * scale));
     const ctx = canvas.getContext('2d');
     if (!ctx) {
       throw new Error('Canvas 2D context unavailable.');
     }
-    ctx.drawImage(img, 0, 0, width, height);
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
     const pngBlob = await new Promise((resolve, reject) => {
       canvas.toBlob((blob) => (blob ? resolve(blob) : reject(new Error('PNG export failed.'))), 'image/png');
