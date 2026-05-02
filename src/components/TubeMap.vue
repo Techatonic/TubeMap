@@ -951,11 +951,20 @@ function buildExportSvgCss() {
 	    if (measureG && typeof measureG.getBBox === 'function') {
 	      const bbox = getMapFitBBox(measureG, showStationNames.value) || measureG.getBBox();
 	      if (bbox && bbox.width > 0 && bbox.height > 0) {
-	        const pad = Math.min(80, Math.round(Math.min(bbox.width, bbox.height) * 0.06));
-	        exportX = bbox.x - pad;
-	        exportY = bbox.y - pad;
-	        width = bbox.width + pad * 2;
-	        height = bbox.height + pad * 2;
+	        const xMin = bbox.x;
+	        const xMax = bbox.x + bbox.width;
+	        const yMin = bbox.y;
+	        const yMax = bbox.y + bbox.height;
+
+	        // Keep padding small but non-zero so stroke caps / labels don't get clipped.
+	        const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+	        const padX = clamp(Math.round((xMax - xMin) * 0.03), 8, 48);
+	        const padY = clamp(Math.round((yMax - yMin) * 0.03), 8, 48);
+
+	        exportX = xMin - padX;
+	        exportY = yMin - padY;
+	        width = (xMax - xMin) + padX * 2;
+	        height = (yMax - yMin) + padY * 2;
 	      }
 	    }
 
