@@ -606,8 +606,18 @@ function renderMap() {
     return;
   }
 
-  const width = container.value.clientWidth || 1200;
-  const height = container.value.clientHeight || 800;
+  const rect = container.value.getBoundingClientRect();
+  const measuredWidth = Math.round(rect.width);
+  const measuredHeight = Math.round(rect.height);
+  // In some layouts (notably Chrome device emulation), clientWidth/clientHeight can be 0 or stale
+  // during the first paint. Defer until we have a real size so "fit to content" is correct.
+  if (measuredWidth < 2 || measuredHeight < 2) {
+    window.requestAnimationFrame(renderMap);
+    return;
+  }
+
+  const width = measuredWidth || 1200;
+  const height = measuredHeight || 800;
   const margin = {
     top: 20,
     right: 20,
@@ -883,12 +893,12 @@ function buildExportSvgCss() {
   `;
 }
 
-async function exportMapPng() {
-  exportError.value = '';
-  if (!container.value) {
-    exportError.value = 'Map container missing.';
-    return;
-  }
+	async function exportMapPng() {
+	  exportError.value = '';
+	  if (!container.value) {
+	    exportError.value = 'Map container missing.';
+	    return;
+	  }
 
   const svgEl = container.value.querySelector('svg');
   if (!svgEl) {
@@ -898,35 +908,74 @@ async function exportMapPng() {
 
   // Clone and force default zoom transform (don’t disturb the live view).
   const clone = svgEl.cloneNode(true);
-  if (!(clone instanceof SVGSVGElement)) {
-    exportError.value = 'Failed to clone SVG.';
-    return;
-  }
+	  if (!(clone instanceof SVGSVGElement)) {
+	    exportError.value = 'Failed to clone SVG.';
+	    return;
+	  }
 
-  const rendered = lastRenderedMap.value;
-  const width = rendered?.width || Math.round(svgEl.getBoundingClientRect().width) || 1200;
-  const height = rendered?.height || Math.round(svgEl.getBoundingClientRect().height) || 800;
+	  const rendered = lastRenderedMap.value;
+	  // Export should not depend on the user's current zoom/pan. We'll:
+	  // 1) apply the default transform to the clone
+	  // 2) mount it offscreen to measure stable content bounds
+	  // 3) set a viewBox that tightly fits the content (with padding), which yields a centered PNG.
+	  let exportX = 0;
+	  let exportY = 0;
+	  let width = rendered?.width || Math.round(svgEl.getBoundingClientRect().width) || 1200;
+	  let height = rendered?.height || Math.round(svgEl.getBoundingClientRect().height) || 800;
 
-  clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-  clone.setAttribute('width', String(width));
-  clone.setAttribute('height', String(height));
-  if (!clone.getAttribute('viewBox')) {
-    clone.setAttribute('viewBox', `0 0 ${width} ${height}`);
-  }
+	  clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+	  // Temporary size/viewBox for measurement; updated below after we compute content bounds.
+	  clone.setAttribute('width', String(width));
+	  clone.setAttribute('height', String(height));
+	  clone.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
-  const g = clone.querySelector('g');
-  if (g && defaultMapTransform.value) {
-    g.setAttribute('transform', defaultMapTransform.value);
-  }
+	  const g = clone.querySelector('g');
+	  if (g && defaultMapTransform.value) {
+	    g.setAttribute('transform', defaultMapTransform.value);
+	  }
 
-  // White background so transparent areas don’t render black in some viewers.
-  const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-  bg.setAttribute('x', '0');
-  bg.setAttribute('y', '0');
-  bg.setAttribute('width', String(width));
-  bg.setAttribute('height', String(height));
-  bg.setAttribute('fill', '#ffffff');
-  clone.insertBefore(bg, clone.firstChild);
+	  try {
+	    const measureHost = document.createElement('div');
+	    measureHost.style.position = 'fixed';
+	    measureHost.style.left = '-10000px';
+	    measureHost.style.top = '0';
+	    measureHost.style.width = '0';
+	    measureHost.style.height = '0';
+	    measureHost.style.overflow = 'hidden';
+	    measureHost.style.opacity = '0';
+	    measureHost.style.pointerEvents = 'none';
+	    measureHost.appendChild(clone);
+	    document.body.appendChild(measureHost);
+
+	    const measureG = clone.querySelector('g');
+	    if (measureG && typeof measureG.getBBox === 'function') {
+	      const bbox = getMapFitBBox(measureG, showStationNames.value) || measureG.getBBox();
+	      if (bbox && bbox.width > 0 && bbox.height > 0) {
+	        const pad = Math.min(80, Math.round(Math.min(bbox.width, bbox.height) * 0.06));
+	        exportX = bbox.x - pad;
+	        exportY = bbox.y - pad;
+	        width = bbox.width + pad * 2;
+	        height = bbox.height + pad * 2;
+	      }
+	    }
+
+	    measureHost.remove();
+	  } catch {
+	    // If measurement fails, fall back to viewport-sized export.
+	  }
+
+	  clone.setAttribute('width', String(width));
+	  clone.setAttribute('height', String(height));
+	  clone.setAttribute('viewBox', `${exportX} ${exportY} ${width} ${height}`);
+
+	  // White background so transparent areas don’t render black in some viewers.
+	  const bg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+	  bg.setAttribute('x', String(exportX));
+	  bg.setAttribute('y', String(exportY));
+	  bg.setAttribute('width', String(width));
+	  bg.setAttribute('height', String(height));
+	  bg.setAttribute('fill', '#ffffff');
+	  clone.insertBefore(bg, clone.firstChild);
 
   const style = document.createElementNS('http://www.w3.org/2000/svg', 'style');
   style.textContent = buildExportSvgCss();
@@ -944,14 +993,18 @@ async function exportMapPng() {
       img.src = url;
     });
 
-    // Export at a higher DPI by rasterizing into a larger canvas.
-    // Cap to avoid huge canvases on memory-constrained mobile browsers.
-    const requestedScale = Math.max(2, Math.min(4, window.devicePixelRatio || 2));
-    const maxSide = 8192;
-    const maxPixels = 32_000_000; // ~32MP
-    const scaleCapBySide = Math.min(maxSide / width, maxSide / height);
-    const scaleCapByPixels = Math.sqrt(maxPixels / (width * height));
-    const scale = Math.max(1, Math.min(requestedScale, scaleCapBySide, scaleCapByPixels));
+	    // Export at a higher DPI by rasterizing into a larger canvas.
+	    // Cap to avoid huge canvases on memory-constrained mobile browsers.
+	    const requestedScale = Math.max(2, Math.min(4, window.devicePixelRatio || 2));
+	    // Ensure a minimum pixel size so mobile exports aren't blurry when zoomed.
+	    const minLongSidePx = 3600;
+	    const minScaleByOutputSize = minLongSidePx / Math.max(width, height);
+	    const desiredScale = Math.max(requestedScale, minScaleByOutputSize);
+	    const maxSide = 8192;
+	    const maxPixels = 32_000_000; // ~32MP
+	    const scaleCapBySide = Math.min(maxSide / width, maxSide / height);
+	    const scaleCapByPixels = Math.sqrt(maxPixels / (width * height));
+	    const scale = Math.max(1, Math.min(desiredScale, scaleCapBySide, scaleCapByPixels));
 
     const canvas = document.createElement('canvas');
     canvas.width = Math.max(1, Math.round(width * scale));
