@@ -893,7 +893,7 @@ function buildExportSvgCss() {
   `;
 }
 
-	async function exportMapPng() {
+ async function exportMapPng() {
 	  exportError.value = '';
 	  if (!container.value) {
 	    exportError.value = 'Map container missing.';
@@ -906,7 +906,7 @@ function buildExportSvgCss() {
     return;
   }
 
-  // Clone and force default zoom transform (don’t disturb the live view).
+  // Clone (don’t disturb the live view).
   const clone = svgEl.cloneNode(true);
 	  if (!(clone instanceof SVGSVGElement)) {
 	    exportError.value = 'Failed to clone SVG.';
@@ -914,8 +914,15 @@ function buildExportSvgCss() {
 	  }
 
 	  const rendered = lastRenderedMap.value;
-	  // Export should not depend on the user's current zoom/pan. We'll:
-	  // 1) apply the default transform to the clone
+	  // Export should not depend on the user's current zoom/pan.
+	  //
+	  // Important: we deliberately export with *no* zoom transform applied to the cloned <g>.
+	  // On some mobile browsers, getBBox results can differ depending on whether ancestor
+	  // transforms are present, which can skew the fitted viewBox and produce a PNG that is
+	  // off-center with lots of whitespace.
+	  //
+	  // We'll:
+	  // 1) reset the clone's root <g> to identity transform
 	  // 2) mount it offscreen to measure stable content bounds
 	  // 3) set a viewBox that tightly fits the content (with padding), which yields a centered PNG.
 	  let exportX = 0;
@@ -930,8 +937,9 @@ function buildExportSvgCss() {
 	  clone.setAttribute('viewBox', `0 0 ${width} ${height}`);
 
 	  const g = clone.querySelector('g');
-	  if (g && defaultMapTransform.value) {
-	    g.setAttribute('transform', defaultMapTransform.value);
+	  if (g) {
+	    // Ensure export is in the same coordinate system used by bbox fitting.
+	    g.setAttribute('transform', '');
 	  }
 
 	  try {
