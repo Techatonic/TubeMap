@@ -196,6 +196,59 @@ function getMapFitBBox(mapGroupEl, includeLabels) {
   return bbox;
 }
 
+function getMapFitBBoxFromData(rendered, includeLabels) {
+  if (!rendered?.data?.lines?.length) {
+    return null;
+  }
+
+  const { data, width, height, margin } = rendered;
+  const geom = computeMapGeometry(data, width, height, margin);
+  const { xScale, yScale, lineWidth } = geom;
+
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+
+  for (const line of data.lines) {
+    if (!line?.nodes?.length) {
+      continue;
+    }
+    for (const node of line.nodes) {
+      const c = node?.coords;
+      if (!Array.isArray(c) || c.length < 2) {
+        continue;
+      }
+      const x = xScale(c[0]);
+      const y = yScale(c[1]);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) {
+        continue;
+      }
+      minX = Math.min(minX, x);
+      minY = Math.min(minY, y);
+      maxX = Math.max(maxX, x);
+      maxY = Math.max(maxY, y);
+    }
+  }
+
+  if (!Number.isFinite(minX) || !Number.isFinite(minY) || !Number.isFinite(maxX) || !Number.isFinite(maxY)) {
+    return null;
+  }
+
+  // Expand bounds to account for strokes/markers, and optionally labels.
+  // This is intentionally generous: better to include a bit extra than clip.
+  const strokePad = Math.max(10, Math.ceil(lineWidth * 1.25));
+  const labelPad = includeLabels ? Math.max(80, Math.ceil(lineWidth * 5)) : 0;
+  const pad = strokePad + labelPad;
+
+  return {
+    x: minX - pad,
+    y: minY - pad,
+    width: (maxX - minX) + pad * 2,
+    height: (maxY - minY) + pad * 2,
+  };
+}
+
 const visibleStationGroups = computed(() => {
   const needle = stationSearch.value.toLowerCase();
   const groupsWithState = stationGroups.value.map((group) => {
@@ -943,40 +996,50 @@ function buildExportSvgCss() {
 	  }
 
 	  try {
-	    const measureHost = document.createElement('div');
-	    measureHost.style.position = 'fixed';
-	    measureHost.style.left = '-10000px';
-	    measureHost.style.top = '0';
-	    measureHost.style.width = '0';
-	    measureHost.style.height = '0';
-	    measureHost.style.overflow = 'hidden';
-	    measureHost.style.opacity = '0';
-	    measureHost.style.pointerEvents = 'none';
-	    measureHost.appendChild(clone);
-	    document.body.appendChild(measureHost);
+	    // Prefer a data-derived bbox to avoid browser-specific SVG getBBox quirks on mobile.
+	    const dataBBox = rendered ? getMapFitBBoxFromData(rendered, showStationNames.value) : null;
+	    if (dataBBox && dataBBox.width > 0 && dataBBox.height > 0) {
+	      exportX = dataBBox.x;
+	      exportY = dataBBox.y;
+	      width = dataBBox.width;
+	      height = dataBBox.height;
+	    } else {
+	      // Fallback: mount offscreen and measure SVG content bounds.
+	      const measureHost = document.createElement('div');
+	      measureHost.style.position = 'fixed';
+	      measureHost.style.left = '-10000px';
+	      measureHost.style.top = '0';
+	      measureHost.style.width = '0';
+	      measureHost.style.height = '0';
+	      measureHost.style.overflow = 'hidden';
+	      measureHost.style.opacity = '0';
+	      measureHost.style.pointerEvents = 'none';
+	      measureHost.appendChild(clone);
+	      document.body.appendChild(measureHost);
 
-	    const measureG = clone.querySelector('g');
-	    if (measureG && typeof measureG.getBBox === 'function') {
-	      const bbox = getMapFitBBox(measureG, showStationNames.value) || measureG.getBBox();
-	      if (bbox && bbox.width > 0 && bbox.height > 0) {
-	        const xMin = bbox.x;
-	        const xMax = bbox.x + bbox.width;
-	        const yMin = bbox.y;
-	        const yMax = bbox.y + bbox.height;
+	      const measureG = clone.querySelector('g');
+	      if (measureG && typeof measureG.getBBox === 'function') {
+	        const bbox = getMapFitBBox(measureG, showStationNames.value) || measureG.getBBox();
+	        if (bbox && bbox.width > 0 && bbox.height > 0) {
+	          const xMin = bbox.x;
+	          const xMax = bbox.x + bbox.width;
+	          const yMin = bbox.y;
+	          const yMax = bbox.y + bbox.height;
 
-	        // Keep padding small but non-zero so stroke caps / labels don't get clipped.
-	        const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
-	        const padX = clamp(Math.round((xMax - xMin) * 0.03), 8, 48);
-	        const padY = clamp(Math.round((yMax - yMin) * 0.03), 8, 48);
+	          // Keep padding small but non-zero so stroke caps / labels don't get clipped.
+	          const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+	          const padX = clamp(Math.round((xMax - xMin) * 0.03), 8, 48);
+	          const padY = clamp(Math.round((yMax - yMin) * 0.03), 8, 48);
 
-	        exportX = xMin - padX;
-	        exportY = yMin - padY;
-	        width = (xMax - xMin) + padX * 2;
-	        height = (yMax - yMin) + padY * 2;
+	          exportX = xMin - padX;
+	          exportY = yMin - padY;
+	          width = (xMax - xMin) + padX * 2;
+	          height = (yMax - yMin) + padY * 2;
+	        }
 	      }
-	    }
 
-	    measureHost.remove();
+	      measureHost.remove();
+	    }
 	  } catch {
 	    // If measurement fails, fall back to viewport-sized export.
 	  }
