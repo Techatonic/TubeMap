@@ -236,10 +236,13 @@ function getMapFitBBoxFromData(rendered, includeLabels) {
   }
 
   // Expand bounds to account for strokes/markers, and optionally labels.
-  // This is intentionally generous: better to include a bit extra than clip.
-  const strokePad = Math.max(10, Math.ceil(lineWidth * 1.25));
-  const labelPad = includeLabels ? Math.max(80, Math.ceil(lineWidth * 5)) : 0;
-  const pad = strokePad + labelPad;
+  // Keep this proportional to the rendered viewport so mobile exports don't get huge padding.
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+  const maxSide = Math.max(width, height);
+  const strokePad = clamp(Math.round(lineWidth * 1.25), 6, 40);
+  const basePad = clamp(Math.round(maxSide * 0.012), 8, 36);
+  const labelPad = includeLabels ? clamp(Math.round(maxSide * 0.018), 10, 64) : 0;
+  const pad = Math.max(strokePad, basePad) + labelPad;
 
   return {
     x: minX - pad,
