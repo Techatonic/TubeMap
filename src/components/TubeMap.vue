@@ -30,7 +30,7 @@
 
       <section class="control-section">
         <h2 class="section-title">
-          <span>Stations</span>
+          <span>Edges</span>
           <span class="section-title-actions">
             <span v-if="dimmedOverlayCount" class="section-meta">
               {{ dimmedOverlayCount }} grey segments
@@ -43,68 +43,68 @@
             >
               Names: {{ showStationNames ? 'On' : 'Off' }}
             </button>
-            <button type="button" class="section-title-btn" @click="clearAllStations">
+            <button type="button" class="section-title-btn" @click="clearAllEdges">
               Clear all
             </button>
           </span>
         </h2>
-        <div ref="stationComboRef" class="combo">
+        <div ref="edgeComboRef" class="combo">
           <input
-            v-model.trim="stationSearch"
+            v-model.trim="edgeSearch"
             type="search"
             class="search-input"
-            placeholder="Search stations"
+            placeholder="Search edges"
             role="combobox"
             aria-autocomplete="list"
-            :aria-expanded="stationDropdownOpen ? 'true' : 'false'"
+            :aria-expanded="edgeDropdownOpen ? 'true' : 'false'"
             aria-haspopup="listbox"
-            @focus="openStationDropdown"
-            @input="openStationDropdown"
-            @keydown.down.prevent="moveStationHighlight(1)"
-            @keydown.up.prevent="moveStationHighlight(-1)"
-            @keydown.enter.prevent="selectHighlightedStationOption"
-            @keydown.esc.prevent="closeStationDropdown"
+            @focus="openEdgeDropdown"
+            @input="openEdgeDropdown"
+            @keydown.down.prevent="moveEdgeHighlight(1)"
+            @keydown.up.prevent="moveEdgeHighlight(-1)"
+            @keydown.enter.prevent="selectHighlightedEdgeOption"
+            @keydown.esc.prevent="closeEdgeDropdown"
           />
           <div
-            v-if="stationDropdownOpen && stationDropdownOptions.length"
+            v-if="edgeDropdownOpen && edgeDropdownOptions.length"
             class="combo-dropdown"
             role="listbox"
           >
             <button
-              v-for="(opt, idx) in stationDropdownOptions"
-              :key="opt.label"
+              v-for="(opt, idx) in edgeDropdownOptions"
+              :key="opt.id"
               type="button"
               class="combo-option"
               :class="{
-                'is-highlighted': idx === stationDropdownHighlight,
+                'is-highlighted': idx === edgeDropdownHighlight,
                 'is-off': !opt.allSelected && !opt.indeterminate,
                 'is-mixed': opt.indeterminate,
               }"
-              @pointerdown.prevent="selectStationOption(opt)"
-              @mousemove="stationDropdownHighlight = idx"
+              @pointerdown.prevent="selectEdgeOption(opt)"
+              @mousemove="edgeDropdownHighlight = idx"
             >
               <span class="combo-option-label">{{ opt.label }}</span>
               <span class="combo-option-meta">
-                {{ opt.activeCount }}/{{ opt.names.length }}
+                {{ opt.activeCount }}/1
               </span>
             </button>
           </div>
         </div>
 
-        <div class="pill-list stations-list">
+        <div class="pill-list edges-list">
           <button
-            v-for="station in visibleStationGroups"
-            :key="station.label"
+            v-for="edge in visibleEdgeGroups"
+            :key="edge.id"
             type="button"
-            class="pill pill-station"
+            class="pill pill-edge"
             :class="{
-              'is-off': !station.allSelected && !station.indeterminate,
-              'is-mixed': station.indeterminate,
+              'is-off': !edge.allSelected && !edge.indeterminate,
+              'is-mixed': edge.indeterminate,
             }"
-            @click="toggleStationGroup(station.names)"
+            @click="toggleEdgeGroup(edge.edgeKeys)"
           >
-            <span class="pill-label">{{ station.label }}</span>
-            <span class="pill-meta">{{ station.activeCount }}/{{ station.names.length }}</span>
+            <span class="pill-label">{{ edge.label }}</span>
+            <span class="pill-meta">{{ edge.activeCount }}/1</span>
           </button>
         </div>
       </section>
@@ -132,7 +132,7 @@ import { line as tubeLine } from 'd3-tube-map/src/curve';
 import { interchangeShift } from 'd3-tube-map/src/directions';
 
 const container = ref(null);
-const stationComboRef = ref(null);
+const edgeComboRef = ref(null);
 const importConfigInputRef = ref(null);
 const baseData = ref(null);
 const renderError = ref('');
@@ -140,12 +140,11 @@ const exportError = ref('');
 const lastRenderedMap = ref(null);
 const dimmedOverlayCount = ref(0);
 const defaultMapTransform = ref('');
-const stationGroups = ref([]);
-const stationNameToGroupNames = ref(new Map());
-const deselectedStations = ref(new Set());
-const stationSearch = ref('');
-const stationDropdownOpen = ref(false);
-const stationDropdownHighlight = ref(0);
+const edgeGroups = ref([]);
+const deselectedEdges = ref(new Set());
+const edgeSearch = ref('');
+const edgeDropdownOpen = ref(false);
+const edgeDropdownHighlight = ref(0);
 const showStationNames = ref(true);
 let resizeObserver = null;
 let pendingResizeFrame = 0;
@@ -252,20 +251,20 @@ function getMapFitBBoxFromData(rendered, includeLabels) {
   };
 }
 
-const visibleStationGroups = computed(() => {
-  const needle = stationSearch.value.toLowerCase();
-  const groupsWithState = stationGroups.value.map((group) => {
-    const activeCount = group.names.reduce(
-      (count, stationName) =>
-        deselectedStations.value.has(stationName) ? count : count + 1,
+const visibleEdgeGroups = computed(() => {
+  const needle = edgeSearch.value.toLowerCase();
+  const groupsWithState = edgeGroups.value.map((group) => {
+    const deselectedCount = group.edgeKeys.reduce(
+      (count, edgeKeyValue) => deselectedEdges.value.has(edgeKeyValue) ? count + 1 : count,
       0,
     );
+    const activeCount = deselectedCount === group.edgeKeys.length ? 0 : 1;
 
     return {
       ...group,
       activeCount,
-      allSelected: activeCount === group.names.length,
-      indeterminate: activeCount > 0 && activeCount < group.names.length,
+      allSelected: activeCount === 1,
+      indeterminate: deselectedCount > 0 && deselectedCount < group.edgeKeys.length,
     };
   });
 
@@ -276,14 +275,39 @@ const visibleStationGroups = computed(() => {
   return groupsWithState.filter(
     (group) =>
       group.label.toLowerCase().includes(needle) ||
-      group.names.some((name) => name.toLowerCase().includes(needle)),
+      group.searchText.toLowerCase().includes(needle),
   );
 });
 
-const stationDropdownOptions = computed(() => visibleStationGroups.value.slice(0, 12));
+const edgeDropdownOptions = computed(() => visibleEdgeGroups.value.slice(0, 12));
 
 function normalizeStationLabel(label) {
   return String(label).replace(/\s+/g, ' ').trim();
+}
+
+function renderedLineName(line, lineIdx) {
+  return `${line.name}__src_${lineIdx}__chunk_1`;
+}
+
+function edgeKey(lineName, pair) {
+  return `${lineName}|${pair.startIdx}-${pair.endIdx}|${pair.startName}->${pair.endName}`;
+}
+
+function stationDisplayLabel(data, stationName) {
+  return normalizeStationLabel(data.stations?.[stationName]?.label || stationName);
+}
+
+function edgeGroupId(startLabel, endLabel) {
+  return [startLabel, endLabel]
+    .map((label) => label.toLowerCase())
+    .sort((a, b) => a.localeCompare(b))
+    .join('__');
+}
+
+function edgeGroupLabel(startLabel, endLabel) {
+  return [startLabel, endLabel]
+    .sort((a, b) => a.localeCompare(b))
+    .join(' - ');
 }
 
 function stationPairs(nodes) {
@@ -349,12 +373,10 @@ function buildFilteredData(data) {
     const line = data.lines[lineIdx];
     // Some inputs contain multiple line objects with the same `name` (e.g. branches of the Northern line).
     // Ensure each rendered line id is unique.
-    const sourceKey = `${line.name}__src_${lineIdx}`;
-
     filteredLines.push(
       normalizedLine(
         line,
-        `${sourceKey}__chunk_1`,
+        renderedLineName(line, lineIdx),
         line.nodes.map((node) => cloneNode(node)),
       ),
     );
@@ -385,29 +407,6 @@ function buildFilteredData(data) {
   };
 }
 
-function applyStationDeselectionStyles() {
-  if (!container.value) {
-    return;
-  }
-
-  const root = d3.select(container.value);
-  const svg = root.select('svg');
-  if (svg.empty()) {
-    return;
-  }
-
-  // d3-tube-map binds station objects containing `.name` to both the marker and label groups.
-  svg
-    .selectAll('.stations .station')
-    .classed('is-deselected', (d) => !!d && deselectedStations.value.has(d.name));
-  svg
-    .selectAll('.labels .label')
-    .classed('is-deselected', (d) => !!d && deselectedStations.value.has(d.name));
-  svg
-    .selectAll('.interchanges .interchange')
-    .classed('is-deselected', (d) => !!d && deselectedStations.value.has(d.name));
-}
-
 function applyLineDeselectionStyles() {
   const rendered = lastRenderedMap.value;
   if (!container.value || !rendered) {
@@ -430,12 +429,10 @@ function applyLineDeselectionStyles() {
   for (const line of data.lines) {
     const pairs = stationPairs(line.nodes);
     for (const pair of pairs) {
-      if (
-        deselectedStations.value.has(pair.startName) ||
-        deselectedStations.value.has(pair.endName)
-      ) {
+      const key = edgeKey(line.name, pair);
+      if (deselectedEdges.value.has(key)) {
         dimmedSegments.push({
-          key: `${line.name}|${pair.startIdx}-${pair.endIdx}`,
+          key,
           line,
           pair,
         });
@@ -496,7 +493,11 @@ function applyLineDeselectionStyles() {
     }
   }
   const dimmedPaths = [...dimmedPathByD.values()];
-  dimmedOverlayCount.value = dimmedPaths.length;
+  dimmedOverlayCount.value = edgeGroups.value.reduce(
+    (count, group) =>
+      group.edgeKeys.every((key) => deselectedEdges.value.has(key)) ? count + 1 : count,
+    0,
+  );
 
   // Layer 1: "mask" the colored line so the segment becomes mostly invisible.
   overlay
@@ -533,9 +534,167 @@ function applyLineDeselectionStyles() {
     .attr('d', (d) => d.d);
 }
 
+function localPointerPoint(event, localEl) {
+  const ctm = localEl?.getScreenCTM?.();
+  if (!ctm) {
+    return null;
+  }
+
+  if (typeof DOMPoint !== 'undefined') {
+    const point = new DOMPoint(event.clientX, event.clientY).matrixTransform(ctm.inverse());
+    return { x: point.x, y: point.y };
+  }
+
+  const svg = localEl.ownerSVGElement;
+  if (!svg?.createSVGPoint) {
+    return null;
+  }
+  const point = svg.createSVGPoint();
+  point.x = event.clientX;
+  point.y = event.clientY;
+  const transformed = point.matrixTransform(ctm.inverse());
+  return { x: transformed.x, y: transformed.y };
+}
+
+function distanceToPath(pathEl, point) {
+  const length = pathEl.getTotalLength();
+  if (!Number.isFinite(length) || length <= 0) {
+    return Infinity;
+  }
+
+  let best = Infinity;
+  const steps = Math.max(12, Math.ceil(length / 24));
+
+  for (let i = 0; i <= steps; i += 1) {
+    const p = pathEl.getPointAtLength((length * i) / steps);
+    const dx = p.x - point.x;
+    const dy = p.y - point.y;
+    best = Math.min(best, (dx * dx) + (dy * dy));
+  }
+
+  return best;
+}
+
+function closestHitTarget(event, overlayEl) {
+  const point = localPointerPoint(event, overlayEl);
+  if (!point) {
+    return null;
+  }
+
+  let closest = null;
+  let closestDistance = Infinity;
+
+  for (const pathEl of overlayEl.querySelectorAll('path.segment-hit')) {
+    const distance = distanceToPath(pathEl, point);
+    if (distance < closestDistance) {
+      closestDistance = distance;
+      closest = d3.select(pathEl).datum();
+    }
+  }
+
+  return closest;
+}
+
+function applyEdgeHitTargets() {
+  const rendered = lastRenderedMap.value;
+  if (!container.value || !rendered) {
+    return;
+  }
+
+  const { data, width, height, margin } = rendered;
+  const root = d3.select(container.value);
+  const svg = root.select('svg');
+  if (svg.empty()) {
+    return;
+  }
+
+  const mapGroup = svg.select('g');
+  if (mapGroup.empty()) {
+    return;
+  }
+
+  let overlay = mapGroup.select('g.segment-hit-overlay');
+  if (overlay.empty()) {
+    const before = mapGroup.select('g.segment-dim-overlay').empty()
+      ? (mapGroup.select('.interchanges').empty() ? '.stations' : '.interchanges')
+      : 'g.segment-dim-overlay';
+    overlay = mapGroup.insert('g', before).attr('class', 'segment-hit-overlay');
+  }
+  overlay.attr('pointer-events', 'stroke');
+
+  const edgeGroupById = new Map(edgeGroups.value.map((group) => [group.id, group]));
+  const { xScale, yScale, lineWidth, lineWidthTickRatio } = computeMapGeometry(
+    data,
+    width,
+    height,
+    margin,
+  );
+  const hitTargets = [];
+
+  for (const line of data.lines) {
+    const pairs = stationPairs(line.nodes);
+    for (const pair of pairs) {
+      const startLabel = stationDisplayLabel(data, pair.startName);
+      const endLabel = stationDisplayLabel(data, pair.endName);
+      const group = edgeGroupById.get(edgeGroupId(startLabel, endLabel));
+      if (!group) {
+        continue;
+      }
+
+      try {
+        const nodes = line.nodes.slice(pair.startIdx, pair.endIdx + 1);
+        const d = tubeLine(
+          {
+            nodes,
+            shiftNormal: line.shiftNormal,
+            shiftCoords: line.shiftCoords,
+          },
+          xScale,
+          yScale,
+          lineWidth,
+          lineWidthTickRatio,
+        );
+        if (d) {
+          hitTargets.push({
+            key: edgeKey(line.name, pair),
+            d,
+            group,
+          });
+        }
+      } catch (err) {
+        console.warn('Failed to draw edge hit target', edgeKey(line.name, pair), err);
+      }
+    }
+  }
+
+  overlay
+    .selectAll('path.segment-hit')
+    .data(hitTargets, (d) => d.key)
+    .join((enter) =>
+      enter
+        .append('path')
+        .attr('class', 'segment-hit')
+        .attr('fill', 'none')
+        .attr('stroke', 'transparent')
+        .attr('stroke-linecap', 'round')
+        .attr('stroke-linejoin', 'round')
+        .style('cursor', 'pointer')
+        .on('pointerdown', (event) => {
+          event.stopPropagation();
+        })
+        .on('click', (event, d) => {
+          event.stopPropagation();
+          const closest = closestHitTarget(event, overlay.node()) || d;
+          toggleEdgeGroup(closest.group.edgeKeys);
+        }),
+    )
+    .attr('stroke-width', Math.max(lineWidth * 1.35, 10))
+    .attr('d', (d) => d.d);
+}
+
 function applyDeselectionStyles() {
-  applyStationDeselectionStyles();
   applyLineDeselectionStyles();
+  applyEdgeHitTargets();
 }
 
 function computeMapGeometry(data, width, height, margin) {
@@ -686,18 +845,7 @@ function renderMap() {
     const map = tubeMap()
       .width(width)
       .height(height)
-      .margin(margin)
-      .on('click', (stationName) => {
-        if (!stationName) {
-          return;
-        }
-        const groupNames = stationNameToGroupNames.value.get(stationName);
-        if (groupNames && groupNames.length) {
-          toggleStationGroup(groupNames);
-        } else {
-          toggleStation(stationName);
-        }
-      });
+      .margin(margin);
 
     root.datum(filteredData).call(map);
   } catch (err) {
@@ -761,53 +909,40 @@ function renderMap() {
   applyDeselectionStyles();
 }
 
-function toggleStation(stationName) {
-  const next = new Set(deselectedStations.value);
-
-  if (next.has(stationName)) {
-    next.delete(stationName);
-  } else {
-    next.add(stationName);
-  }
-
-  deselectedStations.value = next;
-  applyDeselectionStyles();
-}
-
-function toggleStationGroup(stationNames) {
-  const next = new Set(deselectedStations.value);
-  const allSelected = stationNames.every((name) => !next.has(name));
+function toggleEdgeGroup(edgeKeys) {
+  const next = new Set(deselectedEdges.value);
+  const allSelected = edgeKeys.every((key) => !next.has(key));
 
   if (allSelected) {
-    for (const name of stationNames) {
-      next.add(name);
+    for (const key of edgeKeys) {
+      next.add(key);
     }
   } else {
-    for (const name of stationNames) {
-      next.delete(name);
+    for (const key of edgeKeys) {
+      next.delete(key);
     }
   }
 
-  deselectedStations.value = next;
+  deselectedEdges.value = next;
   applyDeselectionStyles();
 }
 
-function clearAllStations() {
-  if (!stationGroups.value.length) {
+function clearAllEdges() {
+  if (!edgeGroups.value.length) {
     return;
   }
 
   const next = new Set();
-  for (const group of stationGroups.value) {
-    for (const name of group.names) {
-      next.add(name);
+  for (const group of edgeGroups.value) {
+    for (const key of group.edgeKeys) {
+      next.add(key);
     }
   }
 
-  deselectedStations.value = next;
-  stationSearch.value = '';
-  stationDropdownHighlight.value = 0;
-  stationDropdownOpen.value = false;
+  deselectedEdges.value = next;
+  edgeSearch.value = '';
+  edgeDropdownHighlight.value = 0;
+  edgeDropdownOpen.value = false;
   applyDeselectionStyles();
 }
 
@@ -815,58 +950,58 @@ function toggleStationNames() {
   showStationNames.value = !showStationNames.value;
 }
 
-function openStationDropdown() {
-  stationDropdownOpen.value = true;
-  stationDropdownHighlight.value = 0;
+function openEdgeDropdown() {
+  edgeDropdownOpen.value = true;
+  edgeDropdownHighlight.value = 0;
 }
 
-function closeStationDropdown() {
-  stationDropdownOpen.value = false;
+function closeEdgeDropdown() {
+  edgeDropdownOpen.value = false;
 }
 
-function moveStationHighlight(delta) {
-  if (!stationDropdownOpen.value) {
-    openStationDropdown();
+function moveEdgeHighlight(delta) {
+  if (!edgeDropdownOpen.value) {
+    openEdgeDropdown();
   }
-  const opts = stationDropdownOptions.value;
+  const opts = edgeDropdownOptions.value;
   if (!opts.length) {
-    stationDropdownHighlight.value = 0;
+    edgeDropdownHighlight.value = 0;
     return;
   }
   const next =
-    (stationDropdownHighlight.value + delta + opts.length) % opts.length;
-  stationDropdownHighlight.value = next;
+    (edgeDropdownHighlight.value + delta + opts.length) % opts.length;
+  edgeDropdownHighlight.value = next;
 }
 
-function selectStationOption(option) {
-  toggleStationGroup(option.names);
-  stationSearch.value = '';
-  stationDropdownHighlight.value = 0;
-  stationDropdownOpen.value = false;
+function selectEdgeOption(option) {
+  toggleEdgeGroup(option.edgeKeys);
+  edgeSearch.value = '';
+  edgeDropdownHighlight.value = 0;
+  edgeDropdownOpen.value = false;
 }
 
-function selectHighlightedStationOption() {
-  if (!stationSearch.value) {
+function selectHighlightedEdgeOption() {
+  if (!edgeSearch.value) {
     return;
   }
-  if (!stationDropdownOpen.value) {
-    openStationDropdown();
+  if (!edgeDropdownOpen.value) {
+    openEdgeDropdown();
   }
-  const opts = stationDropdownOptions.value;
+  const opts = edgeDropdownOptions.value;
   if (!opts.length) {
     return;
   }
-  const idx = Math.min(stationDropdownHighlight.value, opts.length - 1);
-  selectStationOption(opts[idx]);
+  const idx = Math.min(edgeDropdownHighlight.value, opts.length - 1);
+  selectEdgeOption(opts[idx]);
 }
 
 function onWindowPointerDown(event) {
-  const el = stationComboRef.value;
+  const el = edgeComboRef.value;
   if (!el) {
     return;
   }
   if (event.target instanceof Node && !el.contains(event.target)) {
-    closeStationDropdown();
+    closeEdgeDropdown();
   }
 }
 
@@ -888,9 +1023,9 @@ function exportConfigJson() {
   exportError.value = '';
   const config = {
     schema: 'tube-map-config',
-    version: 1,
+    version: 2,
     exportedAt: new Date().toISOString(),
-    deselectedStations: [...deselectedStations.value].sort((a, b) => a.localeCompare(b)),
+    deselectedEdges: [...deselectedEdges.value].sort((a, b) => a.localeCompare(b)),
   };
   const blob = new Blob([JSON.stringify(config, null, 2)], {
     type: 'application/json',
@@ -919,19 +1054,38 @@ async function onImportConfigFile(event) {
   try {
     const text = await file.text();
     const parsed = JSON.parse(text);
-    const list = Array.isArray(parsed?.deselectedStations) ? parsed.deselectedStations : null;
+    const list = Array.isArray(parsed?.deselectedEdges) ? parsed.deselectedEdges : null;
+    const legacyStationList = Array.isArray(parsed?.deselectedStations)
+      ? parsed.deselectedStations
+      : null;
     if (!list) {
-      throw new Error('Invalid config: expected `deselectedStations` array.');
-    }
-
-    const next = new Set();
-    for (const name of list) {
-      if (typeof name === 'string' && name) {
-        next.add(name);
+      if (!legacyStationList) {
+        throw new Error('Invalid config: expected `deselectedEdges` array.');
       }
     }
 
-    deselectedStations.value = next;
+    const validEdgeKeys = new Set(edgeGroups.value.flatMap((group) => group.edgeKeys));
+    const next = new Set();
+    if (list) {
+      for (const key of list) {
+        if (typeof key === 'string' && validEdgeKeys.has(key)) {
+          next.add(key);
+        }
+      }
+    } else {
+      const legacyStations = new Set(
+        legacyStationList.filter((name) => typeof name === 'string' && name),
+      );
+      for (const group of edgeGroups.value) {
+        if (group.stationNames.some((name) => legacyStations.has(name))) {
+          for (const key of group.edgeKeys) {
+            next.add(key);
+          }
+        }
+      }
+    }
+
+    deselectedEdges.value = next;
     applyDeselectionStyles();
   } catch (err) {
     exportError.value = err instanceof Error ? err.message : String(err);
@@ -942,9 +1096,6 @@ async function onImportConfigFile(event) {
 function buildExportSvgCss() {
   // Inline a small amount of CSS so exported SVG -> PNG matches the on-screen state.
   return `
-    .stations .station.is-deselected { opacity: 0.28; filter: grayscale(1); }
-    .labels .label.is-deselected text { opacity: 0.32; fill: #2b2b2b; }
-    .interchanges .interchange.is-deselected { opacity: 0.22; filter: grayscale(1); }
     ${showStationNames.value ? '' : '.labels { opacity: 0 !important; }'}
   `;
 }
@@ -1121,34 +1272,50 @@ onMounted(async () => {
     return;
   }
   baseData.value = data;
-  const groups = new Map();
+  const edgeGroupsById = new Map();
 
-  for (const [name, station] of Object.entries(data.stations)) {
-    const rawLabel = station?.label || name;
-    const label = normalizeStationLabel(rawLabel);
-    const existing = groups.get(label);
+  for (let lineIdx = 0; lineIdx < data.lines.length; lineIdx += 1) {
+    const line = data.lines[lineIdx];
+    const lineName = renderedLineName(line, lineIdx);
 
-    if (existing) {
-      existing.names.push(name);
-    } else {
-      groups.set(label, { label, names: [name] });
+    for (const pair of stationPairs(line.nodes || [])) {
+      const startLabel = stationDisplayLabel(data, pair.startName);
+      const endLabel = stationDisplayLabel(data, pair.endName);
+      const id = edgeGroupId(startLabel, endLabel);
+      const key = edgeKey(lineName, pair);
+      const existing = edgeGroupsById.get(id);
+
+      if (existing) {
+        existing.edgeKeys.push(key);
+        existing.lineNames.add(line.name);
+        existing.stationNames.add(pair.startName);
+        existing.stationNames.add(pair.endName);
+        existing.searchText = [
+          existing.label,
+          [...existing.lineNames].sort((a, b) => a.localeCompare(b)).join(' '),
+          [...existing.stationNames].sort((a, b) => a.localeCompare(b)).join(' '),
+        ].join(' ');
+      } else {
+        edgeGroupsById.set(id, {
+          id,
+          label: edgeGroupLabel(startLabel, endLabel),
+          searchText: `${edgeGroupLabel(startLabel, endLabel)} ${line.name} ${pair.startName} ${pair.endName}`,
+          lineNames: new Set([line.name]),
+          stationNames: new Set([pair.startName, pair.endName]),
+          edgeKeys: [key],
+        });
+      }
     }
   }
 
-  stationGroups.value = [...groups.values()]
+  edgeGroups.value = [...edgeGroupsById.values()]
     .map((group) => ({
       ...group,
-      names: [...group.names].sort((a, b) => a.localeCompare(b)),
+      edgeKeys: [...group.edgeKeys].sort((a, b) => a.localeCompare(b)),
+      lineNames: [...group.lineNames].sort((a, b) => a.localeCompare(b)),
+      stationNames: [...group.stationNames].sort((a, b) => a.localeCompare(b)),
     }))
     .sort((a, b) => a.label.localeCompare(b.label));
-
-  const nameToGroup = new Map();
-  for (const group of stationGroups.value) {
-    for (const stationName of group.names) {
-      nameToGroup.set(stationName, group.names);
-    }
-  }
-  stationNameToGroupNames.value = nameToGroup;
   renderMap();
 
   window.addEventListener('pointerdown', onWindowPointerDown, { capture: true });
@@ -1422,7 +1589,7 @@ h2 {
   align-content: flex-start;
 }
 
-.stations-list {
+.edges-list {
   flex: 1;
 }
 
@@ -1536,22 +1703,6 @@ h2 {
   color: rgba(0, 0, 0, 0.75);
   max-width: 52ch;
   text-align: center;
-}
-
-/* SVG styling for dimmed stations (still visible). */
-.map-root :deep(.stations .station.is-deselected) {
-  opacity: 0.28;
-  filter: grayscale(1);
-}
-
-.map-root :deep(.labels .label.is-deselected text) {
-  opacity: 0.32;
-  fill: #2b2b2b;
-}
-
-.map-root :deep(.interchanges .interchange.is-deselected) {
-  opacity: 0.22;
-  filter: grayscale(1);
 }
 
 .map-root.is-hide-labels :deep(.labels) {
